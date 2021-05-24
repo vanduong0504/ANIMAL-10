@@ -67,3 +67,9 @@ You can reimplement `data.py` for your dataset.
   </tr>
 </tbody>
 </table>
+  <tr>
+    <td rowspan="1">...</td>
+    <td>Resnet18</td>
+    <td>11.2M</td>
+    <td>...</td>
+  </tr>
