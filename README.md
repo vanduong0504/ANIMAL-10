@@ -16,7 +16,7 @@ python main.py --models "VGG16" --phase "test"
 
 <h2> Dataset </h2>
 
-You can reimplement `Data.py` for your dataset. 
+You can reimplement `data.py` for your dataset. 
 
 <h2> Performance of  Models </h2>
 

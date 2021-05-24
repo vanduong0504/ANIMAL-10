@@ -6,9 +6,9 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser(description="CIFAR 10 Image classification")
     parser.add_argument("--model", type=str, required=True, 
-                    help="[VGG16, VGG19, RESNET18, RESNET50,...]")
+                        help="[VGG16, VGG19, RESNET18, RESNET34, RESNET50, RESNET101,...]")
     parser.add_argument("--phase", type=str, default="train", 
-                    help="[train / test]")
+                        help="[train / test]")
     parser.add_argument("--dataroot", type=str, default="./data",
                         help="Path to datasets. (default: `./data`)")
     parser.add_argument("--dataset", type= str, default="CIFAR10",
@@ -17,8 +17,8 @@ def parse_args():
                         help="Number of image channels. (default: 3)")     
     parser.add_argument("--classes", default=10, type=int,
                         help="Number of classes. (default: 10)")                                      
-    parser.add_argument("--epochs", default=200, type=int,
-                        help="Number of total epochs to run. (default: 200)")
+    parser.add_argument("--epochs", default=100, type=int,
+                        help="Number of total epochs to run. (default: 100)")
     parser.add_argument("--batch_sizes", default=128, type=int, metavar="BS",
                         help="Mini-batch size. (default: 128)")
     parser.add_argument("--lr", type=float, default=1e-3, 
@@ -27,12 +27,14 @@ def parse_args():
                         help="Set gpu mode; [cpu, cuda]")
     parser.add_argument("--result_dir", type=str, default="./results", metavar="RD",
                         help="Directory name to save the results. (default: `./results`)")
+    parser.add_argument("--save_type", type=str, default='1', metavar="ST",
+                        help="Saving type ['best_epoch','N_epochs']. (default: `N_epochs`)")
     parser.add_argument("--epoch_save", type=int, default=10, metavar="EP",
-                        help="Saving weights every N epochs. (default:10)")
+                        help="Saving weights every N epochs. (default: 10)")
     parser.add_argument("--weight_path", type=str, default="./weight", metavar="WP",
                         help="Path to weight. (default: `./weight`)")
-    parser.add_argument("--stop", type=int, default=15,
-                        help="Early stopping`   . (default:15)")
+    parser.add_argument("--stop", type=int, default=10,
+                        help="Early stopping. (default: 10)")
     return check_args(parser.parse_args())
 
 def check_args(args):

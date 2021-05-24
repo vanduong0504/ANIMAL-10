@@ -104,15 +104,15 @@ class early_stopping():
 
     def __call__(self, loss):
         if self.best_loss is None:
-            self.best_loss=loss
+            self.best_loss = loss
         elif self.best_loss > loss:
             self.count=0
-            self.best_loss=loss
+            self.best_loss = loss
         else:
             self.count+=1
             print(f"INFO: Early stopping counter {self.count} of {self.patience}")
-            if self.count==self.patience:
+            if self.count == self.patience:
                 print('INFO: Early stopping')
-                self.stop=True
+                self.stop = True
 
 

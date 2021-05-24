@@ -26,6 +26,7 @@ class model:
         self.result_dir = args.result_dir
         self.epoch_save = args.epoch_save
         self.weight_path = args.weight_path
+        self.save_type = args.save_type
         self.stop = args.stop
 
         print()
@@ -77,15 +78,18 @@ class model:
             path = path+f"{self.model}_{epoch}.pth"
         self.net.load_state_dict(torch.load(path))
 
-    def save(self,epoch):
+    def save(self, epoch, save_type):
         path = f"{self.weight_path}/{self.model}/"
-        torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
+        if save_type == 'N_epochs':
+            torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
+        elif save_type == 'best_epoch':
+            torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_best.pth")
 
     def train(self):
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(self.net.parameters(), lr=self.lr, weight_decay=5e-4)
         early_stop = early_stopping(self.stop)
-        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, patience=10, verbose=True)
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, patience=5, verbose=True)
         
         self.net.train()
         
@@ -128,8 +132,11 @@ class model:
                 break
 
             "Save epoch"
-            if epoch%self.epoch_save==self.epoch_save-1:
-                self.save(epoch)
+            if (self.save_type == "N_epochs") and (epoch%self.epoch_save == self.epoch_save-1):
+                self.save(epoch, save_type=self.save_type)
+            elif (self.save_type == "best_epoch") and (mean_loss <= early_stop.best_loss):
+                self.save(epoch, save_type=self.save_type)
+
 
     def test(self):
         "Load model"
