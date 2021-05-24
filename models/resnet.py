@@ -109,7 +109,7 @@ class Resnet(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
-        "RESNET18 and RESNET34 don't need to downsample"
+        "RESNET18 and RESNET34 don't need to downsample layer1"
         if shortcut==2:
             self.layer1 = self.layer_block(resnet_dic['block_2'], shortcut, downsample=None)
         elif shortcut==3:
