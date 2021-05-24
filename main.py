@@ -31,7 +31,7 @@ def parse_args():
                         help=" [best_epoch / N_epochs]. (default: `best_epoch`)")
     parser.add_argument("--save_freq", type=int, default=10, metavar="EP",
                         help="The number of epochs to save the latest results. (default: 10)")
-    parser.add_argument("--save_path", type=str, default="./weight", metavar="WP",
+    parser.add_argument("--save_path", type=str, default="./weight", metavar="SP",
                         help="Path to weight. (default: `./weight`)")
     parser.add_argument("--stop", type=int, default=10,
                         help="Early stopping. (default: 10)")
