@@ -19,18 +19,18 @@ def parse_args():
                         help="Number of classes. (default: 10)")                                      
     parser.add_argument("--epochs", default=100, type=int,
                         help="Number of total epochs to run. (default: 100)")
-    parser.add_argument("--batch_sizes", default=128, type=int, metavar="BS",
-                        help="Mini-batch size. (default: 128)")
+    parser.add_argument("--batch_size", default=128, type=int, metavar="BS",
+                        help="Input batch size. (default: 128)")
     parser.add_argument("--lr", type=float, default=1e-3, 
                         help="Learning rate. (default:1e-3)")
     parser.add_argument("--device", type=str, default="cuda", 
                         help="Set gpu mode; [cpu, cuda]")
     parser.add_argument("--result_dir", type=str, default="./results", metavar="RD",
                         help="Directory name to save the results. (default: `./results`)")
-    parser.add_argument("--save_type", type=str, default='1', metavar="ST",
-                        help="Saving type ['best_epoch','N_epochs']. (default: `N_epochs`)")
-    parser.add_argument("--epoch_save", type=int, default=10, metavar="EP",
-                        help="Saving weights every N epochs. (default: 10)")
+    parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",
+                        help=" [best_epoch / N_epochs]. (default: `best_epoch`)")
+    parser.add_argument("--save_freq", type=int, default=10, metavar="EP",
+                        help="The number of epochs to save the latest results. (default: 10)")
     parser.add_argument("--weight_path", type=str, default="./weight", metavar="WP",
                         help="Path to weight. (default: `./weight`)")
     parser.add_argument("--stop", type=int, default=10,
