@@ -52,7 +52,7 @@ You can reimplement `Data.py` for your dataset.
   </tr>
   <tr>
     <td>Resnet34</td>
-    <td>21.3</td>
+    <td>21.3M</td>
     <td>...</td>
   </tr>
   <tr>
