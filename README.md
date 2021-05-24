@@ -32,6 +32,7 @@ You can reimplement `data.py` for your dataset.
   </tr>
 </thead>
 <tbody>
+  
   <tr>
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
@@ -65,11 +66,13 @@ You can reimplement `data.py` for your dataset.
     <td>...</td>
     <td>...</td>
   </tr>
-</tbody>
-</table>
-  <tr>
+  
+   <tr>
     <td rowspan="1">...</td>
-    <td>Resnet18</td>
-    <td>11.2M</td>
+    <td>...</td>
+    <td>...</td>
     <td>...</td>
   </tr>
+  
+</tbody>
+</table>
