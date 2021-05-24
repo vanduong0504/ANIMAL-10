@@ -29,7 +29,7 @@ def parse_args():
                         help="Directory name to save the results. (default: `./results`)")
     parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",
                         help=" [best_epoch / N_epochs]. (default: `best_epoch`)")
-    parser.add_argument("--save_freq", type=int, default=10, metavar="EP",
+    parser.add_argument("--save_freq", type=int, default=10, metavar="SF",
                         help="The number of epochs to save the latest results. (default: 10)")
     parser.add_argument("--save_path", type=str, default="./weight", metavar="SP",
                         help="Path to weight. (default: `./weight`)")

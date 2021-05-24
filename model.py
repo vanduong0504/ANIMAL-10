@@ -19,13 +19,13 @@ class model:
         self.classes = args.classes
 
         self.epochs = args.epochs
-        self.batch_sizes = args.batch_sizes
+        self.batch_size = args.batch_size
         self.lr = args.lr
 
         self.device = args.device
         self.result_dir = args.result_dir
-        self.epoch_save = args.epoch_save
-        self.weight_path = args.weight_path
+        self.save_freq  = args.save_freq 
+        self.save_path  = args.save_path 
         self.save_type = args.save_type
         self.stop = args.stop
 
@@ -37,7 +37,7 @@ class model:
         print("# classes : ", self.classes)
         print("# epoch : ", self.epochs)
         print("# batch_size : ", self.batch_sizes)
-        print("# epoch_save : ", self.epoch_save)
+        print("# save_freq  : ", self.save_freq )
         print()
 
     def build_model(self):
@@ -67,8 +67,8 @@ class model:
         init_weight(self.net)
         print()
     def load(self, epoch=None):
-        "epoch you want to load, --self.epoch_save"
-        path = f"{self.weight_path}/{self.model}/"
+        "epoch you want to load, --self.save_freq "
+        path = f"{self.save_path }/{self.model}/"
         if epoch is None:   
             "load lastest epoch"
             files = glob.glob(path+"*.pth")
@@ -79,7 +79,7 @@ class model:
         self.net.load_state_dict(torch.load(path))
 
     def save(self, epoch, save_type):
-        path = f"{self.weight_path}/{self.model}/"
+        path = f"{self.save_path }/{self.model}/"
         if save_type == 'N_epochs':
             torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
         elif save_type == 'best_epoch':
@@ -132,7 +132,7 @@ class model:
                 break
 
             "Save epoch"
-            if (self.save_type == "N_epochs") and (epoch%self.epoch_save == self.epoch_save-1):
+            if (self.save_type == "N_epochs") and (epoch%self.save_freq  == self.save_freq -1):
                 self.save(epoch, save_type=self.save_type)
             elif (self.save_type == "best_epoch") and (mean_loss <= early_stop.best_loss):
                 self.save(epoch, save_type=self.save_type)
