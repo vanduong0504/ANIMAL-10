@@ -67,7 +67,7 @@ class model:
         print()
     def load(self, epoch=None):
         "epoch you want to load, --self.epoch_save"
-        path = f"{self.weight_path}_v2/{self.model}/"
+        path = f"{self.weight_path}/{self.model}/"
         if epoch is None:   
             "load lastest epoch"
             files = glob.glob(path+"*.pth")
@@ -78,7 +78,7 @@ class model:
         self.net.load_state_dict(torch.load(path))
 
     def save(self,epoch):
-        path = f"{self.weight_path}_v2/{self.model}/"
+        path = f"{self.weight_path}/{self.model}/"
         torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
 
     def train(self):

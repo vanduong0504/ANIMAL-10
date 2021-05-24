@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import collections as cl
-
+from torchinfo import  summary
 "define dictionary where (key,values) = (blockname,[in_channels, out_channels, repeat])"
 Resnet_block = {
 
@@ -187,3 +187,6 @@ def RESNET50(img_channel=3, num_classes=10):
 
 def RESNET152(img_channel=3, num_classes=10):
     return Resnet(Resnet_block['resnet152'], img_channel, num_classes, shortcut=3)
+
+
+
