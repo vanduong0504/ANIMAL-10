@@ -37,13 +37,11 @@ class BasicBlock(nn.Module):
         self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=3, stride=stride, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(out_cha)
         self.relu = nn.ReLU(inplace=True)
-        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels= out_cha, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(out_cha)
         self.downsample = downsample
 
     def forward(self,input):
-        indentity = input
-
         output = self.conv1(input)
         output = self.bn1(output)
         output = self.relu(output)
@@ -51,12 +49,12 @@ class BasicBlock(nn.Module):
         output = self.conv2(output)
         output = self.bn2(output)
 
-        "Downsample when feautures size change"
+        "Downsample"
         if self.downsample is not None:
-            indentity = self.downsample(indentity)
-
-        output += indentity
-
+            output += self.downsample(input)
+        else:
+            output += input
+    
         output = self.relu(output)
         return output
 
@@ -74,8 +72,6 @@ class Bottleneck(nn.Module):
         self.downsample = downsample
 
     def forward(self, input):
-        indentity = input
-
         output = self.conv1(input)
         output = self.bn1(output)
         output = self.relu(output)
@@ -87,11 +83,12 @@ class Bottleneck(nn.Module):
         output = self.conv3(output)
         output = self.bn3(output)
 
-        "Downsample when feautures size change"
+        "Downsample"
         if self.downsample is not None:
-            indentity = self.downsample(indentity)
-
-        output += indentity
+            output += self.downsample(input)
+        else:
+            output += input
+            
         output = self.relu(output)
         return output
 

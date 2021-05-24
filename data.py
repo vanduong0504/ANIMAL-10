@@ -22,10 +22,10 @@ class Normalize:
         return (sample - self.mean.view(-1,1,1)) / self.std.view(-1,1,1)
 
 class CIFAR:
-    def __init__(self, save_floder = './Data'):
+    def __init__(self, save_floder='./Data'):
         self.floder = save_floder
-        self.train = datasets.CIFAR10(root = self.floder, train = True, download = True, transform = self.transform(type = True))
-        self.test = datasets.CIFAR10(root = self.floder, train = False, download = True, transform = self.transform(type = False))
+        self.train = datasets.CIFAR10(root = self.floder, train=True, download=True, transform=self.transform(type=1))
+        self.test = datasets.CIFAR10(root = self.floder, train=False, download=True, transform=self.transform(type=0))
 
     def transform(self, type):
         "bool type for train or test"

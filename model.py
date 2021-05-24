@@ -80,9 +80,9 @@ class model:
 
     def save(self, epoch, save_type):
         path = f"{self.save_path }/{self.model}/"
-        if save_type == 'N_epochs':
+        if save_type == "N_epochs":
             torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
-        elif save_type == 'best_epoch':
+        elif save_type == "best_epoch":
             torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_best.pth")
 
     def train(self):
@@ -154,7 +154,7 @@ class model:
                 total += labels.size(0)
                 correct += (predicted==labels).sum().item()
 
-            print('Accuracy of the network on the 10000 test images: %d %%' % (100*correct/total))
+            print(f"Accuracy of the network on the 10000 test images: {100*(correct/total)}%")
 
             
     
