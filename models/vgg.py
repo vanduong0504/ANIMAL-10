@@ -37,7 +37,7 @@ class VGG(nn.Module):
 
         "Coding format torchvision.models.vgg"
         self.features = nn.Sequential(*features)
-        self.avgpool = nn.AdaptiveAvgPool2d(output_size=(1,1))
+        self.avgpool = nn.AdaptiveAvgPool2d(output_size=(7,7))
         self.classifier = nn.Sequential(*self.classifier_block(fc, self.nums_class))
 
     "forward pass"
@@ -84,4 +84,5 @@ def VGG16(img_channel=3, num_classes=10):
 
 def VGG19(img_channel=3, num_classes=10):
     return VGG(VGG_block['vgg19'], img_channel, num_classes)
+
 

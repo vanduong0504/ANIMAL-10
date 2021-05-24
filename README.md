@@ -35,29 +35,29 @@ You can reimplement `Data.py` for your dataset.
   <tr>
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
-    <td>...</td>
+    <td>14.9M</td>
     <td>...</td>
   </tr>
   <tr>
     <td>VGG19</td>
-    <td>...</td>
+    <td>20.2M</td>
     <td>...</td>
   </tr>
   
   <tr>
     <td rowspan="4">Resnet</td>
     <td>Resnet18</td>
-    <td>...</td>
+    <td>11.2M</td>
     <td>...</td>
   </tr>
   <tr>
     <td>Resnet34</td>
-    <td>...</td>
+    <td>21.3</td>
     <td>...</td>
   </tr>
   <tr>
-    <td>Resnet101</td>
-    <td>...</td>
+    <td>Resnet50</td>
+    <td>23.5M</td>
     <td>...</td>
   </tr>
   <tr>
