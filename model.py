@@ -36,7 +36,7 @@ class model:
         print("# channels : ", self.channels)
         print("# classes : ", self.classes)
         print("# epoch : ", self.epochs)
-        print("# batch_size : ", self.batch_sizes)
+        print("# batch_size : ", self.batch_size)
         print("# save_freq  : ", self.save_freq )
         print()
 
@@ -45,8 +45,8 @@ class model:
         data = CIFAR()
         traindata = data.train
         testdata = data.test
-        self.trainloader = data.loader(traindata, batch_sizes=self.batch_sizes)
-        self.testloader = data.loader(testdata, batch_sizes=self.batch_sizes)
+        self.trainloader = data.loader(traindata, batch_sizes=self.batch_size)
+        self.testloader = data.loader(testdata, batch_sizes=self.batch_size)
 
         "Define model"
         if self.model == "VGG16": 
