@@ -134,7 +134,7 @@ class model:
             "Save epoch"
             if (self.save_type == "N_epochs") and (epoch%self.save_freq  == self.save_freq -1):
                 self.save(epoch, save_type=self.save_type)
-            elif (self.save_type == "best_epoch") and (mean_loss <= early_stop.best_loss):
+            elif (self.save_type == "best_epoch") and (early_stop.count == 0):
                 self.save(epoch, save_type=self.save_type)
 
 
