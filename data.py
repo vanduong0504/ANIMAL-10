@@ -33,6 +33,7 @@ class CIFAR:
             print('Train Transform')
             return transforms.Compose(
                 [transforms.RandomHorizontalFlip(),
+                transforms.RandomCrop(32),
                 ToTensor(),
                 Normalize(mean_train, std_train)])
         else:
@@ -42,6 +43,6 @@ class CIFAR:
                 Normalize(mean_test, std_test)])
 
     def loader(self, dataset, batch_sizes):
-        return  DataLoader(dataset = dataset, batch_size = batch_sizes, shuffle = True)
+        return  DataLoader(dataset = dataset, batch_size = batch_sizes, shuffle = True, num_workers=2)
 
 
