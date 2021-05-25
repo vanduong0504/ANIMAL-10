@@ -21,8 +21,8 @@ def parse_args():
                         help="Number of total epochs to run. (default: 100)")
     parser.add_argument("--batch_size", default=128, type=int, metavar="BS",
                         help="Input batch size. (default: 128)")
-    parser.add_argument("--lr", type=float, default=1e-3, 
-                        help="Learning rate. (default:1e-3)")
+    parser.add_argument("--lr", type=float, default=3e-4, 
+                        help="Learning rate. (default:3e-4)")
     parser.add_argument("--device", type=str, default="cuda", 
                         help="Set gpu mode; [cpu, cuda]")
     parser.add_argument("--result_dir", type=str, default="./results", metavar="RD",
