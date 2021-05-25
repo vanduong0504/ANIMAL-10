@@ -59,11 +59,11 @@ You can reimplement `data.py` for your dataset.
   <tr>
     <td>Resnet50</td>
     <td>23.5M</td>
-    <td>...</td>
+    <td>.</td>
   </tr>
   <tr>
     <td>Resnet152</td>
-    <td>...</td>
+    <td>.</td>
     <td>...</td>
   </tr>
   
