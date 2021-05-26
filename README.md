@@ -37,7 +37,7 @@ You can reimplement `data.py` for your dataset.
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>14.9M</td>
-    <td>...</td>
+    <td>92.09</td>
   </tr>
   <tr>
     <td>VGG19</td>
