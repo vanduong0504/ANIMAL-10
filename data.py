@@ -33,7 +33,7 @@ class CIFAR:
             print('Train Transform')
             return transforms.Compose(
                 [transforms.RandomHorizontalFlip(),
-                transforms.RandomCrop(32),
+                transforms.RandomCrop(32, padding=4),
                 ToTensor(),
                 Normalize(mean_train, std_train)])
         else:

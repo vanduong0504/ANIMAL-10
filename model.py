@@ -1,6 +1,7 @@
 import os
 import time
 import glob
+from numpy import save
 import torch
 from utils import *
 import torch.nn as nn
@@ -78,21 +79,24 @@ class model:
             path = path+f"{self.model}_{epoch}.pth"
         self.net.load_state_dict(torch.load(path))
 
-    def save(self, epoch, save_type):
+    def save(self, epoch, save_type, iteration=None):
         path = f"{self.save_path }/{self.model}/"
-        if save_type == "N_epochs":
+        if iteration is not None:
+            torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_64k.pth")
+        elif save_type == "N_epochs":
             torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_{epoch+1}.pth")
         elif save_type == "best_epoch":
             torch.save(self.net.state_dict(), check_folder(path)+f"{self.model}_best.pth")
-
+        
     def train(self):
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.Adam(self.net.parameters(), lr=self.lr, weight_decay=5e-4)
+        optimizer = optim.SGD(self.net.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-3)
         early_stop = early_stopping(self.stop)
-        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, patience=5, verbose=True)
+        scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[82,122], gamma=0.1, verbose=True)
         
         self.net.train()
         
+        iteration = 0
         for epoch in range(self.epochs):
             losses = []
             acc = []
@@ -114,22 +118,27 @@ class model:
                 accurary = correct/labels.size(0)
                 acc.append(accurary)
                 
-
+                iteration += 1
                 loop.set_description(f"Epoch [{epoch+1}/{self.epochs}]")
                 loop.set_postfix(loss=loss.item(), acc_train=accurary*100)
                 time.sleep(0.1)
 
+                "Cifar10 train to 64k iteration" 
+                if iteration==64000:
+                    self.save(epoch, save_type=self.save_type, iteration=True)
+                    return 
+
             mean_loss = sum(losses)/len(losses)
             mean_acc = sum(acc)/len(acc)
-            scheduler.step(mean_loss)
-            print(f"Epoch [{epoch+1}/{self.epochs}] Loss: {mean_loss}")
+            scheduler.step()
+            print(f"Epoch [{epoch+1}/{self.epochs}] Iter: {iteration}  Loss: {mean_loss}")
             
             "Early stopping"
             early_stop(mean_loss)
             if early_stop.stop:
                 "save best epoch"
-                self.save(epoch-self.stop)
-                break
+                self.save(epoch-self.stop, save_type=self.save_type)
+                return
 
             "Save epoch"
             if (self.save_type == "N_epochs") and (epoch%self.save_freq  == self.save_freq -1):
