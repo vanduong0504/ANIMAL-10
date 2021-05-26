@@ -92,7 +92,7 @@ class model:
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.SGD(self.net.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-3)
         early_stop = early_stopping(self.stop)
-        scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[82,122], gamma=0.1, verbose=True)
+        scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[82,122], gamma=0.1)
         
         self.net.train()
         
