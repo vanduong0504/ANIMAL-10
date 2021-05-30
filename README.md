@@ -42,7 +42,7 @@ You can reimplement `data.py` for your dataset.
   <tr>
     <td>VGG19</td>
     <td>20.2M</td>
-    <td>...</td>
+    <td>91.74</td>
   </tr>
   
   <tr>

@@ -127,7 +127,7 @@ class model:
                 if iteration==64000:
                     self.save(epoch, save_type=self.save_type, iteration=True)
                     return 
-
+                    
             mean_loss = sum(losses)/len(losses)
             mean_acc = sum(acc)/len(acc)
             scheduler.step()
