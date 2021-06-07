@@ -70,7 +70,7 @@ I use **CIFAR10** as example dataset for my implementation. You can reimplement 
   </tr>
   <tr>
     <td>Resnet152</td>
-    <td>.</td>
+    <td>...</td>
     <td>...</td>
   </tr>
   
