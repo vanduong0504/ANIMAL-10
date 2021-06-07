@@ -1,27 +1,34 @@
-<h1> CIFAR10 CLASSIFICATION </h1>
+<h1 align="center"> IMAGE CLASSIFICATION </h1>
 
-Try building some deep learning models from scratch with Pytorch.
+[![Pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 
-<h2> Train </h2>
+
+<h2> :pencil: About the project </h2>
+
+This project aims to classify image in **CIFAR10** dataset with some deep learning models. I try to implement it from scratch. 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<h2> :computer: Train/Test </h2>
+<h4> Train </h4>
 
 ```
 python main.py --models "VGG16" --phase "train"
 ```
-
-<h2> Test </h2>
+<h4> Test </h4>
 
 ```
 python main.py --models "VGG16" --phase "test"
 ```
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-<h2> Dataset </h2>
+<h2> :floppy_disk: Dataset </h2>
 
-You can reimplement `data.py` for your dataset. 
+I use **CIFAR10** as example dataset for my implementation. You can reimplement `data.py` for your custom dataset. 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-<h2> Performance of  Models </h2>
+<h2> :chart_with_upwards_trend:Performance of Models </h2>
 
 <table style="undefined;table-layout: fixed; width: 900px">
-
 
 <thead>
   <tr>
