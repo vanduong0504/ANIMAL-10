@@ -17,7 +17,7 @@ def parse_args():
                         help="Number of image channels. (default: 3)")     
     parser.add_argument("--classes", default=10, type=int,
                         help="Number of classes. (default: 10)")                                      
-    parser.add_argument("--epochs", default=200, type=int,
+    parser.add_argument("--epoch", default=200, type=int,
                         help="Number of total epochs to run. (default: 200)")
     parser.add_argument("--batch_size", default=128, type=int, metavar="BS",
                         help="Input batch size. (default: 128)")
