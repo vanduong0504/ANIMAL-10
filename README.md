@@ -5,7 +5,7 @@
 
 <h2> :pencil: About the project </h2>
 
-This project aims to classify image in **CIFAR10** dataset with some deep learning models. I try to implement it from scratch. 
+This project aims to classify image in **CIFAR10** dataset with deep learning models. I try to implement it from scratch. 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2> :computer: Train/Test </h2>
@@ -70,7 +70,7 @@ I use **CIFAR10** as example dataset for my implementation. You can reimplement 
   </tr>
   <tr>
     <td>Resnet152</td>
-    <td>.</td>
+    <td>...</td>
     <td>...</td>
   </tr>
   
