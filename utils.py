@@ -1,4 +1,5 @@
 import os
+import cv2
 import torch
 import numpy as np
 import torch.nn as nn
@@ -8,9 +9,8 @@ from torch.nn.modules import batchnorm
 from torch.nn.modules.linear import Linear
 from torch.nn.modules.batchnorm import BatchNorm2d
 
-"Mean and std for CIFAR10 after calculate with mean_std function"
-mean_train, std_train = (0.4915, 0.4822, 0.4466), (0.2465, 0.2430, 0.2609)
-mean_test, std_test = (0.4942, 0.4851, 0.4504), (0.2462, 0.2425, 0.2609)
+# Mean and std for CIFAR10 after calculate with mean_std function
+mean, std = (0.4915, 0.4822, 0.4466), (0.2465, 0.2430, 0.2609)
 
 
 def mean_std(loader):
@@ -33,31 +33,25 @@ def mean_std(loader):
     return means, variations
 
 
-def show_image(loader, batch_size, Type=None):
-    #Type: None for Image, True for Train Loader, False for Test Loader
-
-    dataiter = iter(loader)
-    images, labels = dataiter.next()
-    if Type is True:
-        "Train Loader"
-        images = reverse_Normalize(images, mean_train, std_train)
-    elif Type is False:
-        "Test Loader"
-        images = reverse_Normalize(images, mean_test, std_test)
+def show_image(classes, image_path=None, loader=None):
+    """This function use to show_image for batch from loader or
+    image from folder."""
+    if image_path is not None:
+        image = cv2.imread(image_path)
+        image = torch.from_numpy(image)
+        grid = utils.make_grid(image)
     else:
-        "Image"
-        images = reverse_Normalize(images, (0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-
-    images = (images * 255).type(torch.uint8)
-    grid = utils.make_grid(images)
+        dataiter = iter(loader)
+        batch_images, labels = dataiter.next()
+        batch_images = reverse_Normalize(batch_images, mean, std)
+        batch_images = (batch_images * 255).type(torch.uint8)
+        grid = utils.make_grid(batch_images)
+        print(' '.join(classes[label] for label in labels))
 
     # show images
     npimg = grid.numpy()
     plt.imshow(np.transpose(npimg, axes=(1, 2, 0)))
     plt.show()
-
-    # print labels
-    print(' '.join('%5s' % classes[labels[j]] for j in range(batch_size)))
 
 
 def check_folder(dir):
@@ -67,20 +61,15 @@ def check_folder(dir):
 
 
 def Normalize(image, mean, std):
-    "Normalize numpy image to tensor range 0-1"
     image = torch.from_numpy(image / 255).permute(2, 0, 1)
     return (image - mean) / std
 
 
 def reverse_Normalize(x, mean, std):
-    n_dim = len(x.size())
     mean = torch.from_numpy(np.array(mean))
     std = torch.from_numpy(np.array(std))
 
-    if n_dim == 4:
-        return x * std.view(1, -1, 1, 1) + mean.view(1, -1, 1, 1)
-    else:
-        return x * std + mean
+    return x * std.view(1, -1, 1, 1) + mean.view(1, -1, 1, 1)
 
 
 def init_weight(net):
