@@ -19,7 +19,7 @@ class model:
         self.channels = args.c
         self.classes = args.classes
 
-        self.epochs = args.epochs
+        self.epoch = args.epoch
         self.batch_size = args.batch_size
         self.lr = args.lr
 
@@ -36,7 +36,7 @@ class model:
         print("# dataset : ", self.dataset)
         print("# channels : ", self.channels)
         print("# classes : ", self.classes)
-        print("# epoch : ", self.epochs)
+        print("# epoch : ", self.epoch)
         print("# batch_size : ", self.batch_size)
         print("# save_freq  : ", self.save_freq)
         print()
@@ -98,7 +98,7 @@ class model:
         self.net.train()
 
         iteration = 0
-        for epoch in range(self.epochs):
+        for epoch in range(self.epoch):
             losses = []
             acc = []
             loop = tqdm(enumerate(self.trainloader), total=len(self.trainloader), leave=False)
