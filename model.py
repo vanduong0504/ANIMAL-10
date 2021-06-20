@@ -1,15 +1,14 @@
 import os
 import time
 import glob
-from numpy import save
 import torch
 from utils import *
 import torch.nn as nn
-from models import vgg, resnet
 from tqdm import tqdm
 from data import CIFAR
+from numpy import save
 import torch.optim as optim
-
+from models import vgg, resnet
 
 class model:
     def __init__(self, args):
@@ -84,7 +83,7 @@ class model:
         path = f"{self.save_path }/{self.model}/"
         if iteration is not None:
             torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_64k.pth")
-        elif save_type == "N_epochs":
+        elif save_type == "N_epoch":
             torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_{epoch+1}.pth")
         elif save_type == "best_epoch":
             torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_best.pth")
@@ -101,9 +100,8 @@ class model:
         for epoch in range(self.epoch):
             losses = []
             acc = []
-            loop = tqdm(enumerate(self.trainloader), total=len(self.trainloader), leave=False)
-            for batch_idx, (inputs, labels) in loop:
-                "Train"
+            loop = tqdm((self.trainloader), total=len(self.trainloader), leave=False)
+            for (inputs, labels) in loop:
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
                 optimizer.zero_grad()
                 outputs = self.net(inputs)
@@ -112,7 +110,6 @@ class model:
                 loss.backward()
                 optimizer.step()
 
-                "Accuracy"
                 correct = 0
                 _, predicted = torch.max(outputs, dim=1)
                 correct = (predicted == labels).sum().item()
@@ -120,11 +117,11 @@ class model:
                 acc.append(accurary)
 
                 iteration += 1
-                loop.set_description(f"Epoch [{epoch+1}/{self.epochs}]")
+                loop.set_description(f"Epoch [{epoch+1}/{self.epoch}]")
                 loop.set_postfix(loss=loss.item(), acc_train=accurary * 100)
                 time.sleep(0.1)
 
-                "Cifar10 train to 64k iteration"
+                #Cifar10 train to 64k iteration
                 if iteration == 64000:
                     self.save(epoch, save_type=self.save_type, iteration=True)
                     return
@@ -132,7 +129,7 @@ class model:
             mean_loss = sum(losses) / len(losses)
             mean_acc = sum(acc) / len(acc)
             scheduler.step()
-            print(f"Epoch [{epoch+1}/{self.epochs}] Iter: {iteration}  Loss: {mean_loss}")
+            print(f"Epoch [{epoch+1}/{self.epoch}] Iter: {iteration}  Loss: {mean_loss} Acc: {mean_acc}")
 
             "Early stopping"
             early_stop(mean_loss)
@@ -142,7 +139,7 @@ class model:
                 return
 
             "Save epoch"
-            if (self.save_type == "N_epochs") and (epoch % self.save_freq == self.save_freq - 1):
+            if (self.save_type == "N_epoch") and (epoch % self.save_freq == self.save_freq - 1):
                 self.save(epoch, save_type=self.save_type)
             elif (self.save_type == "best_epoch") and (early_stop.count == 0):
                 self.save(epoch, save_type=self.save_type)

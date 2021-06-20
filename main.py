@@ -26,8 +26,6 @@ def parse_args():
                         help="Learning rate. (default:1e-1)")
     parser.add_argument("--device", type=str, default="cuda",
                         help="Set gpu mode; [cpu, cuda]")
-    parser.add_argument("--result_dir", type=str, default="./results", metavar="RD",
-                        help="Directory to save the results. (default: `./results`)")
     parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",
                         help=" [best_epoch / N_epochs]. (default: `best_epoch`)")
     parser.add_argument("--save_freq", type=int, default=10, metavar="SF",
@@ -40,9 +38,6 @@ def parse_args():
 
 
 def check_args(args):
-    "--result_dir"
-    check_folder(os.path.join(args.result_dir, args.dataset, "img"))
-
     "--epoch"
     try:
         assert args.epoch >= 1

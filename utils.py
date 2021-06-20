@@ -2,7 +2,6 @@ import os
 import torch
 import numpy as np
 import torch.nn as nn
-from matplotlib import image
 from torchvision import utils
 import matplotlib.pyplot as plt
 from torch.nn.modules import batchnorm
@@ -35,9 +34,7 @@ def mean_std(loader):
 
 
 def show_image(loader, batch_size, Type=None):
-    "Type: None for Image, True for Train Loader, False for Test Loader"
-    classes = ('plane', 'car', 'bird', 'cat',
-               'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+    #Type: None for Image, True for Train Loader, False for Test Loader
 
     dataiter = iter(loader)
     images, labels = dataiter.next()
