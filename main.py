@@ -23,7 +23,7 @@ def parse_args():
     parser.add_argument("--batch_size", default=128, type=int, metavar="BS",
                         help="Input batch size. (default: 128)")
     parser.add_argument("--lr", type=float, default=1e-1,
-                        help="Learning rate. (default:1e-1)")
+                        help="Learning rate. (default:1e-3)")
     parser.add_argument("--device", type=str, default="cuda",
                         help="Set gpu mode; [cpu, cuda]")
     parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",

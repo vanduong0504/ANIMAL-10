@@ -33,7 +33,7 @@ My configuration for training phase:
 <ul>
   <li> <strong>Batch size</strong> : 128</li>
   <li> <strong>Epoch</strong> : 50</li>
-  <li> <strong>Learing rate</strong> : 0.01</li>
+  <li> <strong>Learing rate</strong> : 0.001</li>
 </ul>
 
 
