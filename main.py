@@ -31,7 +31,9 @@ def parse_args():
     parser.add_argument("--save_freq", type=int, default=10, metavar="SF",
                         help="Number of epochs to save latest results. Using when --save_type=`N_epochs`.(default: 10)")
     parser.add_argument("--save_path", type=str, default="./weight", metavar="SP",
-                        help="Path to weight. (default: `./weight`)")
+                        help="Save weight path. (default: `./weight`)")
+    parser.add_argument("--load_path", type=str, default=None, metavar="LP",
+                        help="Load weight path.")                   
     parser.add_argument("--stop", type=int, default=99,
                         help="Early stopping. (default: 99)")
     return check_args(parser.parse_args())

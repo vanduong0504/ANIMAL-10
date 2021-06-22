@@ -26,6 +26,7 @@ class model:
         self.device = args.device
         self.save_freq = args.save_freq
         self.save_path = args.save_path
+        self.load_path = args.load_path
         self.save_type = args.save_type
         self.stop = args.stop
 
@@ -69,18 +70,7 @@ class model:
         init_weight(self.net)
         print()
 
-    def load(self, epoch=None):
-        """
-        This function use to load the latest epoch or specific epoch.
-        """
-        path = f"{self.save_path }/{self.model}/"
-        if epoch is None:
-
-            files = glob.glob(path + "*.pth")
-            path = max(files, key=os.path.getctime)
-            print(path)
-        else:
-            path = path + f"{self.model}_{epoch}.pth"
+    def load(self, path):
         self.net.load_state_dict(torch.load(path))
 
     def save(self, epoch, save_type, iteration=None):
@@ -150,7 +140,7 @@ class model:
 
     def test(self):
         # Load model
-        self.load()
+        self.load(self.load_path)
         self.net.eval()
 
         correct = 0
