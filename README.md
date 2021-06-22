@@ -26,6 +26,19 @@ python main.py --models "VGG16" --phase "test"
 I use **CIFAR10** as example dataset for my implementation. You can reimplement `data.py` for your custom dataset. 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
+
+<h2> :scroll: Configuration </h2>
+
+My configuration for training phase:
+<ul>
+  <li> <strong>Batch size</strong> : 128</li>
+  <li> <strong>Epoch</strong> : 50</li>
+  <li> <strong>Learing rate</strong> : 0.01</li>
+</ul>
+
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
 <h2> :chart_with_upwards_trend:Performance of Models </h2>
 
 <table style="undefined;table-layout: fixed; width: 900px">
@@ -44,12 +57,12 @@ I use **CIFAR10** as example dataset for my implementation. You can reimplement 
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>14.9M</td>
-    <td>92.09</td>
+    <td>...</td>
   </tr>
   <tr>
     <td>VGG19</td>
     <td>20.2M</td>
-    <td>91.74</td>
+    <td>...</td>
   </tr>
   
   <tr>
