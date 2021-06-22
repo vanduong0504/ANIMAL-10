@@ -23,7 +23,7 @@ class model:
         self.lr = args.lr
 
         self.device = args.device
-        self.result_dir = args.result_dir
+        self.save_freq = args.save_freq
         self.save_path = args.save_path
         self.save_type = args.save_type
         self.stop = args.stop
