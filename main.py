@@ -1,19 +1,18 @@
-from models import *
+import argparse
 from utils import *
 from model import model
-import argparse
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="CIFAR 10 Image classification")
     parser.add_argument("--model", type=str, required=True,
                         help="[VGG16, VGG19, RESNET18, RESNET34, RESNET50, RESNET101,...]")
-    parser.add_argument("--phase", type=str, default="train",
+    parser.add_argument("--phase", type=str, default=None,
                         help="[train / test]")
     parser.add_argument("--dataroot", type=str, default="./data",
                         help="Path to datasets. (default: `./data`)")
-    parser.add_argument("--dataset", type=str, default="CIFAR10",
-                        help="Dataset name.  (default: `CIFAR10`)")
+    parser.add_argument("--dataset", type=str, default=None,
+                        help="Dataset name.")
     parser.add_argument("--c", default=3, type=int, metavar="CHANNELS",
                         help="Number of image channels. (default: 3)")
     parser.add_argument("--classes", default=10, type=int,
@@ -33,7 +32,9 @@ def parse_args():
     parser.add_argument("--save_path", type=str, default="./weight", metavar="SP",
                         help="Save weight path. (default: `./weight`)")
     parser.add_argument("--load_path", type=str, default=None, metavar="LP",
-                        help="Load weight path.")                   
+                        help="Load weight path.")
+    parser.add_argument("--image_path", type=str, default=None, metavar="IP",
+                        help="Image path for testing single image.")                    
     parser.add_argument("--stop", type=int, default=99,
                         help="Early stopping. (default: 99)")
     return check_args(parser.parse_args())

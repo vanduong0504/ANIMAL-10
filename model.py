@@ -27,29 +27,17 @@ class model:
         self.save_freq = args.save_freq
         self.save_path = args.save_path
         self.load_path = args.load_path
+        self.image_path = args.image_path
         self.save_type = args.save_type
         self.stop = args.stop
 
-        print()
-        print("##### Information #####")
-        print("# model : ", self.model)
-        print("# dataset : ", self.dataset)
-        print("# channels : ", self.channels)
-        print("# classes : ", self.classes)
-        print("# epoch : ", self.epoch)
-        print("# batch_size : ", self.batch_size)
-        print("# save_freq  : ", self.save_freq)
-        print()
-
+        # Summary information
+        print_info(args)
+            
     def build_model(self):
         """
-        This function return dataset for model.
+        This function build dataset, model and initialize parameters.
         """
-        data = CIFAR()
-        traindata = data.train
-        testdata = data.test
-        self.trainloader = data.loader(traindata, batch_sizes=self.batch_size)
-        self.testloader = data.loader(testdata, batch_sizes=self.batch_size)
 
         # Define model
         if self.model == "VGG16":
@@ -65,9 +53,21 @@ class model:
         elif self.model == "RESNET152":
             self.net = resnet.RESNET152(self.channels, self.classes).to(self.device)
 
+        # Define dataset
+        if self.image_path is None:
+            data = CIFAR()
+            traindata = data.train
+            testdata = data.test
+            self.trainloader = data.loader(traindata, batch_sizes=self.batch_size)
+            self.testloader = data.loader(testdata, batch_sizes=self.batch_size)
+
         # Weight initialization
-        print("Weight Initialization")
-        init_weight(self.net)
+        if self.load_path is None:
+            print("Weight Initialization")
+            init_weight(self.net)
+        else:
+            print(f"Loading weight from {self.load_path}")
+            self.load(self.load_path)
         print()
 
     def load(self, path):
@@ -150,7 +150,7 @@ class model:
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
                 outputs = self.net(inputs)
 
-                _, predicted = torch.max(outputs.data, 1)
+                predicted = torch.argmax(outputs, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 

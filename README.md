@@ -57,7 +57,7 @@ My configuration for training phase:
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>14.9M</td>
-    <td>...</td>
+    <td>84.97</td>
   </tr>
   <tr>
     <td>VGG19</td>
@@ -83,7 +83,7 @@ My configuration for training phase:
   </tr>
   <tr>
     <td>Resnet152</td>
-    <td>...</td>
+    <td>58.1M</td>
     <td>...</td>
   </tr>
   

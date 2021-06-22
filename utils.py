@@ -33,25 +33,29 @@ def mean_std(loader):
     return means, variations
 
 
-def show_image(classes, image_path=None, loader=None):
+def show_image(classes=None, image_path=None, loader=None):
     """This function use to show_image for batch from loader or
     image from folder."""
     if image_path is not None:
         image = cv2.imread(image_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = torch.from_numpy(image)
         grid = utils.make_grid(image)
+        print(grid.shape)
     else:
         dataiter = iter(loader)
         batch_images, labels = dataiter.next()
         batch_images = reverse_Normalize(batch_images, mean, std)
-        batch_images = (batch_images * 255).type(torch.uint8)
+        batch_images = (batch_images * 255).type(torch.uint8).permute(1,2,0)
         grid = utils.make_grid(batch_images)
         print(' '.join(classes[label] for label in labels))
 
     # show images
-    npimg = grid.numpy()
-    plt.imshow(np.transpose(npimg, axes=(1, 2, 0)))
+    #npimg = grid.numpy()
+    plt.imshow(grid.numpy())
     plt.show()
+
+    return grid
 
 
 def check_folder(dir):
@@ -108,3 +112,22 @@ class early_stopping():
                 print('INFO: Early stopping')
                 self.stop = True
 
+
+def print_info(args):
+    print()
+    print("##### Information #####")
+    print("# model : ", args.model)
+    print("# dataset : ", args.dataset)
+    print("# channels : ", args.c)
+    if args.phase == "train":
+        print("# classes : ", args.classes)
+        print("# epoch : ", args.epoch)
+        print("# batch_size : ", args.batch_size)
+        print("# save_freq  : ", args.save_freq)
+    elif args.phase == "test":
+        print("# classes : ", args.classes)
+    else:
+        print("# weight path : ", args.load_path)
+        print("# image path : ", args.image_path)
+    print("#######################")
+    print()
