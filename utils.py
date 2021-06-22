@@ -107,3 +107,4 @@ class early_stopping():
             if self.count == self.patience:
                 print('INFO: Early stopping')
                 self.stop = True
+
