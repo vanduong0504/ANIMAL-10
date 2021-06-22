@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import collections as cl
 
-"define dictionary where (key,values) = (blockname,[nums_conv2d,in_channels,out_channels])"
+# Define dictionary where (key,values) = (blockname,[nums_conv2d,in_channels,out_channels])"
 VGG_block = {
 
     'vgg16': cl.OrderedDict({
@@ -20,12 +20,11 @@ VGG_block = {
         'block_5': [4, 512, 512]})
 }
 
-"define dictionary where (key,values) = (fc,[in_features,out_features])"
+# Define dictionary where (key,values) = (fc,[in_features,out_features])"
 fc = cl.OrderedDict({'fc1': [512, 224], 'fc2': [224, 112], 'fc3': [112, 'num_class']})
 
 
 class VGG(nn.Module):
-    "default image channels = 3 and nums_class = 10 for cifar10 dataset"
 
     def __init__(self, vgg_dic, image_channels, nums_class):
         super().__init__()
@@ -42,8 +41,6 @@ class VGG(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
         self.classifier = nn.Sequential(*self.classifier_block(fc, self.nums_class))
 
-    "forward pass"
-
     def forward(self, input):
         output = self.features(input)
         output = self.avgpool(output)
@@ -51,8 +48,6 @@ class VGG(nn.Module):
         output = self.classifier(output)
 
         return output
-
-    "init CNN_block"
 
     def feature_block(self, nums_conv, image_channels, in_cha, out_cha):
         block = []
@@ -67,8 +62,6 @@ class VGG(nn.Module):
         block += [nn.MaxPool2d(kernel_size=(2, 2))]
         return block
 
-    "init Fully_Connected block"
-
     def classifier_block(self, fc, num_class):
         block = []
         for i, (keys, values) in enumerate(fc.items(), 1):
@@ -78,7 +71,7 @@ class VGG(nn.Module):
             except BaseException:
                 block += [nn.Linear(in_features=in_fea, out_features=num_class)]
 
-            "last fully connected layer so we don't need Dropout or Relu"
+            # Last fully connected layer don't need Dropout or Relu"
             if i != 3:
                 block += [nn.ReLU(inplace=True)]
                 block += [nn.Dropout()]

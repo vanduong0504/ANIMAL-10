@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import collections as cl
 
-"define dictionary where (key,values) = (blockname,[in_channels, out_channels, repeat])"
+# Define dictionary where (key,values) = (blockname,[in_channels, out_channels, repeat])"
 Resnet_block = {
 
     'resnet18': cl.OrderedDict({
@@ -30,10 +30,12 @@ Resnet_block = {
         'block_5': [256, 512, 3]})
 }
 
-"Resnet18 and Resnet34 using shortcuts=2 aka BasicBlock"
-
 
 class BasicBlock(nn.Module):
+    """
+    This class init the residual block with skip connection = 2 for Resnet18 and Resnet34
+    """
+
     def __init__(self, in_cha, out_cha, stride, downsample=None):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=3, stride=stride, padding=1, bias=False)
@@ -51,7 +53,7 @@ class BasicBlock(nn.Module):
         output = self.conv2(output)
         output = self.bn2(output)
 
-        "Downsample"
+        # Downsample
         if self.downsample is not None:
             output += self.downsample(input)
         else:
@@ -61,10 +63,11 @@ class BasicBlock(nn.Module):
         return output
 
 
-"Resnet50 and Resnet152 using shortcuts=3 aka Bottleneck"
-
-
 class Bottleneck(nn.Module):
+    """
+    This class init the residual block with skip connection = 3 for Resnet50 and Resnet152
+    """
+
     def __init__(self, in_cha, out_cha, stride=1, downsample=None):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=1, bias=False)
@@ -88,7 +91,7 @@ class Bottleneck(nn.Module):
         output = self.conv3(output)
         output = self.bn3(output)
 
-        "Downsample"
+        # Downsample
         if self.downsample is not None:
             output += self.downsample(input)
         else:
@@ -99,21 +102,18 @@ class Bottleneck(nn.Module):
 
 
 class Resnet(nn.Module):
-    "default image channels=3 and nums_class=10 for cifar10 dataset"
-    "shortcuts=2 for Block_18_34 and shortcuts=3 for Block_50_152"
 
     def __init__(self, resnet_dic, image_channels, nums_class, shortcut):
         super().__init__()
         self.image_channels = image_channels
         self.nums_class = nums_class
 
-        "Coding format torchvision.models.restnet"
+        # Coding format follow torchvision.models.restnet
         self.conv1 = nn.Conv2d(in_channels=self.image_channels, out_channels=64, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
-        "RESNET18 and RESNET34 don't need to downsample layer1"
         if shortcut == 2:
             self.layer1 = self.layer_block(resnet_dic['block_2'], shortcut, downsample=None)
         elif shortcut == 3:
@@ -129,7 +129,6 @@ class Resnet(nn.Module):
             self.classifier = nn.Linear(out_flatten, self.nums_class)
         elif shortcut == 3:
             self.classifier = nn.Linear(out_flatten * 4, self.nums_class)
-    "forward pass"
 
     def forward(self, input):
         output = self.relu(self.bn1(self.conv1(input)))
@@ -149,7 +148,7 @@ class Resnet(nn.Module):
     def layer_block(self, resnet_dic, shortcut, downsample=None, intermediate_channels=None):
         block = []
         in_, out_, repeat = resnet_dic
-        "Downsample first conv2d"
+
         if downsample is not None:
             if shortcut == 2:
                 downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_, kernel_size=1, stride=2, bias=False),

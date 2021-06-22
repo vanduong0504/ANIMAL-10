@@ -38,13 +38,13 @@ def parse_args():
 
 
 def check_args(args):
-    "--epoch"
+    # --epoch
     try:
         assert args.epoch >= 1
     except BaseException:
         print("number of epochs must be larger than or equal to one")
 
-    "--batch_size"
+    # --batch_size
     try:
         assert args.batch_size >= 1
     except BaseException:
@@ -53,7 +53,7 @@ def check_args(args):
 
 
 def main():
-    "parse arguments"
+    # parse arguments
     args = parse_args()
     if args is None:
         exit()

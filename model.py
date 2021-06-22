@@ -10,6 +10,7 @@ from numpy import save
 import torch.optim as optim
 from models import vgg, resnet
 
+
 class model:
     def __init__(self, args):
         self.model = args.model
@@ -40,14 +41,16 @@ class model:
         print()
 
     def build_model(self):
-        "Dataset"
+        """
+        This function return dataset for model.
+        """
         data = CIFAR()
         traindata = data.train
         testdata = data.test
         self.trainloader = data.loader(traindata, batch_sizes=self.batch_size)
         self.testloader = data.loader(testdata, batch_sizes=self.batch_size)
 
-        "Define model"
+        # Define model
         if self.model == "VGG16":
             self.net = vgg.VGG16(self.channels, self.classes).to(self.device)
         elif self.model == "VGG19":
@@ -61,16 +64,18 @@ class model:
         elif self.model == "RESNET152":
             self.net = resnet.RESNET152(self.channels, self.classes).to(self.device)
 
-        "weight initialization"
+        # Weight initialization
         print("Weight Initialization")
         init_weight(self.net)
         print()
 
     def load(self, epoch=None):
-        "epoch you want to load, --self.save_freq "
+        """
+        This function use to load the latest epoch or specific epoch.
+        """
         path = f"{self.save_path }/{self.model}/"
         if epoch is None:
-            "load lastest epoch"
+
             files = glob.glob(path + "*.pth")
             path = max(files, key=os.path.getctime)
             print(path)
@@ -120,7 +125,7 @@ class model:
                 loop.set_postfix(loss=loss.item(), acc_train=accurary * 100)
                 time.sleep(0.1)
 
-                #Cifar10 train to 64k iteration
+                # Cifar10 train to 64k iteration
                 if iteration == 64000:
                     self.save(epoch, save_type=self.save_type, iteration=True)
                     return
@@ -130,21 +135,21 @@ class model:
             scheduler.step()
             print(f"Epoch [{epoch+1}/{self.epoch}] Iter: {iteration}  Loss: {mean_loss} Acc: {mean_acc}")
 
-            "Early stopping"
+            # Early stopping
             early_stop(mean_loss)
             if early_stop.stop:
                 "save best epoch"
                 self.save(epoch - self.stop, save_type=self.save_type)
                 return
 
-            "Save epoch"
+            # Save epoch
             if (self.save_type == "N_epoch") and (epoch % self.save_freq == self.save_freq - 1):
                 self.save(epoch, save_type=self.save_type)
             elif (self.save_type == "best_epoch") and (early_stop.count == 0):
                 self.save(epoch, save_type=self.save_type)
 
     def test(self):
-        "Load model"
+        # Load model
         self.load()
         self.net.eval()
 
