@@ -81,9 +81,3 @@ def VGG16(img_channel=3, num_classes=10):
 
 def VGG19(img_channel=3, num_classes=10):
     return VGG(VGG_block['vgg19'], img_channel, num_classes)
-
-
-from torchinfo import summary
-
-model = VGG19()
-summary(model, (1, 3, 224, 224), depth=3)
