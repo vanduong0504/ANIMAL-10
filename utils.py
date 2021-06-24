@@ -117,7 +117,6 @@ def print_info(args):
     print()
     print("##### Information #####")
     print("# model : ", args.model)
-    print("# dataset : ", args.dataset)
     print("# channels : ", args.c)
     if args.phase == "train":
         print("# classes : ", args.classes)

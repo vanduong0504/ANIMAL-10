@@ -1,5 +1,3 @@
-import torch
-import numpy as np
 from utils import *
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms, utils

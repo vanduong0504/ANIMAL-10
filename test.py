@@ -1,17 +1,13 @@
 import torch
-import torchvision
 from utils import *
 from model import model
 from main import parse_args
-from torchvision.transforms import transforms
 
 
 def main():
     """
     This function use to test an image and output a class name
     """
-
-    #transforms = transforms
     net = model(parse_args())
     net.build_model()
 

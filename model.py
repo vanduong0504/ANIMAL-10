@@ -15,7 +15,6 @@ class model:
     def __init__(self, args):
         self.model = args.model
         self.phase = args.phase
-        self.dataset = args.dataset
         self.channels = args.c
         self.classes = args.classes
 
@@ -38,8 +37,6 @@ class model:
         """
         This function build dataset, model and initialize parameters.
         """
-
-        # Define model
         if self.model == "VGG16":
             self.net = vgg.VGG16(self.channels, self.classes).to(self.device)
         elif self.model == "VGG19":

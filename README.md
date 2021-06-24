@@ -12,13 +12,19 @@ This project aims to classify image in **CIFAR10** dataset with deep learning mo
 <h4> Train </h4>
 
 ```
-python main.py --models "VGG16" --phase "train"
+python main.py --models "VGG16" --phase "train" 
 ```
 <h4> Test </h4>
 
 ```
-python main.py --models "VGG16" --phase "test"
+python main.py --models "VGG16" --phase "test" --load_path "path/to/weight"
 ```
+<h4> Image Testing </h4>
+
+```
+python main.py --models "VGG16" --phase "test" --image_path "path/to/image" --load_path "path/to/weight"
+```
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2> :floppy_disk: Dataset </h2>
@@ -56,13 +62,13 @@ My configuration for training phase:
   <tr>
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
-    <td>14.9M</td>
+    <td>134.3M</td>
     <td>84.97</td>
   </tr>
   <tr>
     <td>VGG19</td>
-    <td>20.2M</td>
-    <td>...</td>
+    <td>139.6M</td>
+    <td>85.01</td>
   </tr>
   
   <tr>

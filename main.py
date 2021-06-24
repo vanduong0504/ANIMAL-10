@@ -11,8 +11,6 @@ def parse_args():
                         help="[train / test]")
     parser.add_argument("--dataroot", type=str, default="./data",
                         help="Path to datasets. (default: `./data`)")
-    parser.add_argument("--dataset", type=str, default=None,
-                        help="Dataset name.")
     parser.add_argument("--c", default=3, type=int, metavar="CHANNELS",
                         help="Number of image channels. (default: 3)")
     parser.add_argument("--classes", default=10, type=int,
