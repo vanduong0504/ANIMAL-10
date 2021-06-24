@@ -22,7 +22,7 @@ python main.py --models "VGG16" --phase "test" --load_path "path/to/weight"
 <h4> Image Testing </h4>
 
 ```
-python main.py --models "VGG16" --phase "test" --image_path "path/to/image" --load_path "path/to/weight"
+python main.py --models "VGG16" --phase "test" --load_path "path/to/weight" --image_path "path/to/image" 
 ```
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
