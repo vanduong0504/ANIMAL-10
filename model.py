@@ -1,12 +1,10 @@
 import os
 import time
-import glob
 import torch
 from utils import *
 import torch.nn as nn
 from tqdm import tqdm
 from data import CIFAR
-from numpy import save
 import torch.optim as optim
 from models import vgg, resnet
 
@@ -32,7 +30,7 @@ class model:
 
         # Summary information
         print_info(args)
-            
+
     def build_model(self):
         """
         This function build dataset, model and initialize parameters.

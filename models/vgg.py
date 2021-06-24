@@ -25,7 +25,6 @@ fc = cl.OrderedDict({'fc1': [25088, 4096], 'fc2': [4096, 4096], 'fc3': [4096, 'n
 
 
 class VGG(nn.Module):
-
     def __init__(self, vgg_dic, image_channels, nums_class):
         super().__init__()
         self.image_channels = image_channels
@@ -36,7 +35,7 @@ class VGG(nn.Module):
             nums_convs, in_channels, out_channels = values
             features += self.feature_block(nums_convs, self.image_channels, in_channels, out_channels)
 
-        "Coding format torchvision.models.vgg"
+        # Coding format torchvision.models.vgg
         self.features = nn.Sequential(*features)
         self.avgpool = nn.AdaptiveAvgPool2d(output_size=(7, 7))
         self.classifier = nn.Sequential(*self.classifier_block(fc, self.nums_class))
@@ -75,9 +74,9 @@ class VGG(nn.Module):
         return block
 
 
-def VGG16(img_channel=3, num_classes=10):
+def VGG16(img_channel, num_classes):
     return VGG(VGG_block['vgg16'], img_channel, num_classes)
 
 
-def VGG19(img_channel=3, num_classes=10):
+def VGG19(img_channel, num_classes):
     return VGG(VGG_block['vgg19'], img_channel, num_classes)

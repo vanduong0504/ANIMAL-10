@@ -32,7 +32,7 @@ def parse_args():
     parser.add_argument("--load_path", type=str, default=None, metavar="LP",
                         help="Load weight path.")
     parser.add_argument("--image_path", type=str, default=None, metavar="IP",
-                        help="Image path for testing single image.")                    
+                        help="Image path for testing single image.")
     parser.add_argument("--stop", type=int, default=99,
                         help="Early stopping. (default: 99)")
     return check_args(parser.parse_args())
@@ -54,7 +54,6 @@ def check_args(args):
 
 
 def main():
-    # parse arguments
     args = parse_args()
     if args is None:
         exit()

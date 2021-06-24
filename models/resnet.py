@@ -36,12 +36,12 @@ class BasicBlock(nn.Module):
     This class init the residual block with skip connection = 2 for Resnet18 and Resnet34
     """
 
-    def __init__(self, in_cha, out_cha, stride, downsample=None):
+    def __init__(self, in_cha, out_cha, stride=1, downsample=None):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=3, stride=stride, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(out_cha)
         self.relu = nn.ReLU(inplace=True)
-        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, kernel_size=3, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(out_cha)
         self.downsample = downsample
 
@@ -60,6 +60,7 @@ class BasicBlock(nn.Module):
             output += input
 
         output = self.relu(output)
+
         return output
 
 
@@ -98,6 +99,7 @@ class Bottleneck(nn.Module):
             output += input
 
         output = self.relu(output)
+
         return output
 
 
@@ -154,44 +156,41 @@ class Resnet(nn.Module):
                 downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_, kernel_size=1, stride=2, bias=False),
                                                  nn.BatchNorm2d(num_features=out_))
                 block += [BasicBlock(in_cha=in_, out_cha=out_, stride=2, downsample=downsample_block)]
-
-            elif shortcut == 3:
+            else:
                 if intermediate_channels is None:
-                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_ * 4, kernel_size=1, stride=1, bias=False),
+                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_ * 4, kernel_size=1, bias=False),
                                                      nn.BatchNorm2d(num_features=out_ * 4))
-                    block += [Bottleneck(in_cha=in_, out_cha=out_, stride=1, downsample=downsample_block)]
+                    block += [Bottleneck(in_cha=in_, out_cha=out_, downsample=downsample_block)]
                 else:
-                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_ * 4, out_channels=out_ * 4, kernel_size=1, stride=1, bias=False),
+                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_ * 4, out_channels=out_ * 4, kernel_size=1, stride=2, bias=False),
                                                      nn.BatchNorm2d(num_features=out_ * 4))
-                    block += [Bottleneck(in_cha=in_ * 4, out_cha=out_, stride=1, downsample=downsample_block)]
+                    block += [Bottleneck(in_cha=in_ * 4, out_cha=out_, stride=2, downsample=downsample_block)]
         else:
             if shortcut == 2:
-                block += [BasicBlock(in_cha=in_, out_cha=out_, stride=1)]
+                block += [BasicBlock(in_cha=in_, out_cha=out_)]
+            else:
+                block += [Bottleneck(in_cha=in_, out_cha=out_)]
 
-            elif shortcut == 3:
-                block += [Bottleneck(in_cha=in_, out_cha=out_, stride=1)]
-
-        for i in range(1, repeat):
+        for _ in range(1, repeat):
             if shortcut == 2:
-                block += [BasicBlock(in_cha=out_, out_cha=out_, stride=1)]
-
-            elif shortcut == 3:
-                block += [Bottleneck(in_cha=out_ * 4, out_cha=out_, stride=1)]
+                block += [BasicBlock(in_cha=out_, out_cha=out_)]
+            else:
+                block += [Bottleneck(in_cha=out_ * 4, out_cha=out_)]
 
         return nn.Sequential(*block)
 
 
-def RESNET18(img_channel=3, num_classes=10):
+def RESNET18(img_channel, num_classes):
     return Resnet(Resnet_block['resnet18'], img_channel, num_classes, shortcut=2)
 
 
-def RESNET34(img_channel=3, num_classes=10):
+def RESNET34(img_channel, num_classes):
     return Resnet(Resnet_block['resnet34'], img_channel, num_classes, shortcut=2)
 
 
-def RESNET50(img_channel=3, num_classes=10):
+def RESNET50(img_channel, num_classes):
     return Resnet(Resnet_block['resnet50'], img_channel, num_classes, shortcut=3)
 
 
-def RESNET152(img_channel=3, num_classes=10):
+def RESNET152(img_channel, num_classes):
     return Resnet(Resnet_block['resnet152'], img_channel, num_classes, shortcut=3)

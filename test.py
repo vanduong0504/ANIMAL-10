@@ -11,7 +11,7 @@ def main():
     net = model(parse_args())
     net.build_model()
 
-    # This is label dictionary for cifar10:
+    # Label dictionary for cifar10:
     label = {'plane': 0, 'car': 1, 'bird': 2, 'cat': 3,
              'deer': 4, 'dog': 5, 'frog': 6, 'horse': 7, 'ship': 8, 'truck': 9}
 

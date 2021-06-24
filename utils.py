@@ -5,9 +5,6 @@ import numpy as np
 import torch.nn as nn
 from torchvision import utils
 import matplotlib.pyplot as plt
-from torch.nn.modules import batchnorm
-from torch.nn.modules.linear import Linear
-from torch.nn.modules.batchnorm import BatchNorm2d
 
 # Mean and std for CIFAR10 after calculate with mean_std function
 mean, std = (0.4915, 0.4822, 0.4466), (0.2465, 0.2430, 0.2609)
@@ -34,27 +31,25 @@ def mean_std(loader):
 
 
 def show_image(classes=None, image_path=None, loader=None):
-    """This function use to show_image for batch from loader or
-    image from folder."""
+    """
+    This function use to show_image for batch from loader or
+    image from folder.
+    """
     if image_path is not None:
         image = cv2.imread(image_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = torch.from_numpy(image)
         grid = utils.make_grid(image)
-        print(grid.shape)
     else:
         dataiter = iter(loader)
         batch_images, labels = dataiter.next()
         batch_images = reverse_Normalize(batch_images, mean, std)
-        batch_images = (batch_images * 255).type(torch.uint8).permute(1,2,0)
+        batch_images = (batch_images * 255).type(torch.uint8).permute(1, 2, 0)
         grid = utils.make_grid(batch_images)
         print(' '.join(classes[label] for label in labels))
 
-    # show images
-    #npimg = grid.numpy()
     plt.imshow(grid.numpy())
     plt.show()
-
     return grid
 
 
@@ -83,11 +78,11 @@ def init_weight(net):
             if layer.bias is not None:
                 nn.init.constant_(layer.bias, 0)
 
-        elif isinstance(layer, BatchNorm2d):
+        elif isinstance(layer, nn.BatchNorm2d):
             nn.init.constant_(layer.weight, 1)
             nn.init.constant_(layer.bias, 0)
 
-        elif isinstance(layer, Linear):
+        elif isinstance(layer, nn.Linear):
             nn.init.kaiming_uniform_(layer.weight, nonlinearity="relu")
             nn.init.constant_(layer.bias, 0)
 

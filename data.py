@@ -11,7 +11,7 @@ class CIFAR:
         self.classes = self.train.class_to_idx
 
     def transform(self, type):
-        # bool type for train or test
+        # Bool type for train or test
         if type:
             return transforms.Compose(
                 [transforms.RandomHorizontalFlip(),
