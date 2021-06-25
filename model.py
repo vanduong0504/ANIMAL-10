@@ -35,18 +35,11 @@ class model:
         """
         This function build dataset, model and initialize parameters.
         """
-        if self.model == "VGG16":
-            self.net = vgg.VGG16(self.channels, self.classes).to(self.device)
-        elif self.model == "VGG19":
-            self.net = vgg.VGG19(self.channels, self.classes).to(self.device)
-        elif self.model == "RESNET18":
-            self.net = resnet.RESNET18(self.channels, self.classes).to(self.device)
-        elif self.model == "RESNET34":
-            self.net = resnet.RESNET34(self.channels, self.classes).to(self.device)
-        elif self.model == "RESNET50":
-            self.net = resnet.RESNET50(self.channels, self.classes).to(self.device)
-        elif self.model == "RESNET152":
-            self.net = resnet.RESNET152(self.channels, self.classes).to(self.device)
+        name = self.model
+        if name.find("VGG"):
+            self.net = vgg.create_model(name, self.channels, self.classes).to(self.device)
+        elif name.find("RESNET"):
+            self.net = resnet.create_model(name, self.channels, self.classes).to(self.device)
 
         # Define dataset
         if self.image_path is None:

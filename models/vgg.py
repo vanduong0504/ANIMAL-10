@@ -74,9 +74,8 @@ class VGG(nn.Module):
         return block
 
 
-def VGG16(img_channel, num_classes):
-    return VGG(VGG_block['vgg16'], img_channel, num_classes)
-
-
-def VGG19(img_channel, num_classes):
-    return VGG(VGG_block['vgg19'], img_channel, num_classes)
+def create_model(name, img_channel, num_classes):
+    if name.find('16'):
+        return VGG(VGG_block['vgg16'], img_channel, num_classes)
+    else:
+        return VGG(VGG_block['vgg19'], img_channel, num_classes)

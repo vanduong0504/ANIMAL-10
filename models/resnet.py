@@ -180,17 +180,12 @@ class Resnet(nn.Module):
         return nn.Sequential(*block)
 
 
-def RESNET18(img_channel, num_classes):
-    return Resnet(Resnet_block['resnet18'], img_channel, num_classes, shortcut=2)
-
-
-def RESNET34(img_channel, num_classes):
-    return Resnet(Resnet_block['resnet34'], img_channel, num_classes, shortcut=2)
-
-
-def RESNET50(img_channel, num_classes):
-    return Resnet(Resnet_block['resnet50'], img_channel, num_classes, shortcut=3)
-
-
-def RESNET152(img_channel, num_classes):
-    return Resnet(Resnet_block['resnet152'], img_channel, num_classes, shortcut=3)
+def create_model(name, img_channel, num_classes):
+    if name.find('18'):
+        return Resnet(Resnet_block['resnet18'], img_channel, num_classes, shortcut=2)
+    elif name.find('34'):
+        return Resnet(Resnet_block['resnet34'], img_channel, num_classes, shortcut=2)
+    elif name.find('50'):
+        return Resnet(Resnet_block['resnet50'], img_channel, num_classes, shortcut=3)
+    else:
+        return Resnet(Resnet_block['resnet152'], img_channel, num_classes, shortcut=3)
