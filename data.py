@@ -6,8 +6,8 @@ from torchvision import datasets, transforms
 
 class Dataset:
     def __init__(self, dataroot):
-        self.train = datasets.ImageFolder(root=os.path.join(dataroot,'train'), transform=self.transform(1))
-        self.test = datasets.ImageFolder(root=os.path.join(dataroot,'test'), transform=self.transform(0))
+        self.train = datasets.ImageFolder(root=os.path.join(dataroot, 'train'), transform=self.transform(1))
+        self.test = datasets.ImageFolder(root=os.path.join(dataroot, 'test'), transform=self.transform(0))
         self.classes = self.train.class_to_idx
 
     def transform(self, type):
@@ -15,7 +15,7 @@ class Dataset:
         if type:
             return transforms.Compose(
                 [transforms.RandomHorizontalFlip(),
-                 transforms.RandomCrop(32, padding=4),
+                 transforms.RandomCrop(224, padding=4),
                  transforms.ToTensor(),
                  transforms.Normalize(mean, std)])
         else:

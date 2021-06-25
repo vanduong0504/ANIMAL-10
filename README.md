@@ -5,19 +5,19 @@
 
 <h2> :pencil: About the project </h2>
 
-This project aims to classify image in **CIFAR10** dataset with deep learning models. I try to implement it from scratch. 
+This project aims to classify image in [**ANIMAL-10**](https://www.kaggle.com/alessiocorrado99/animals10) dataset with deep learning models. I try to implement it from scratch. 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2> :computer: Train/Test </h2>
 <h4> Train </h4>
 
 ```
-python main.py --models "VGG16" --phase "train" 
+python main.py --models "VGG16" --phase "train" --dataroot "path/to/dataroot" 
 ```
 <h4> Test </h4>
 
 ```
-python main.py --models "VGG16" --phase "test" --load_path "path/to/weight"
+python main.py --models "VGG16" --phase "test" --dataroot "path/to/dataroot" --load_path "path/to/weight"
 ```
 <h4> Image Testing </h4>
 
@@ -29,15 +29,15 @@ python main.py --models "VGG16" --phase "test" --load_path "path/to/weight" --im
 
 <h2> :floppy_disk: Dataset </h2>
 
-I use **CIFAR10** as example dataset for my implementation. For your dataset, follow this structure:
+For custom dataset, follow this structure:
 
     📂 your dataset
-    |─── train-set
+    |─── train
     |       |─────class-1
     |       |      +-- *.jpg
     |       |─────class-2
     |       |     +-- *.jpg
-    |─── test-set
+    |─── test
     |       |─────class-1
     |       |      +-- *.jpg
     |       |─────class-2
@@ -45,14 +45,14 @@ I use **CIFAR10** as example dataset for my implementation. For your dataset, fo
 
     # For example
     📂 Dog-and-Cat
-    |─── train-set
+    |─── train
     |       |─────class-1
     |       |      +-- 001.jpg
     |       |      +-- 002.jpg
     |       |─────class-2
     |       |      +-- 003.jpg
     |       |      +-- 004.jpg
-    |─── test-set
+    |─── test
     |       |─────class-1
     |       |      +-- 001.jpg
     |       |      +-- 002.jpg
