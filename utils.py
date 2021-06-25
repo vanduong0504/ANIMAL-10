@@ -62,15 +62,9 @@ def check_folder(dir):
     return dir
 
 
-def Normalize(image, mean, std):
-    image = torch.from_numpy(image / 255).permute(2, 0, 1)
-    return (image - mean) / std
-
-
 def reverse_Normalize(x, mean, std):
     mean = torch.from_numpy(np.array(mean))
     std = torch.from_numpy(np.array(std))
-
     return x * std.view(1, -1, 1, 1) + mean.view(1, -1, 1, 1)
 
 
@@ -88,6 +82,25 @@ def init_weight(net):
         elif isinstance(layer, nn.Linear):
             nn.init.kaiming_uniform_(layer.weight, nonlinearity="relu")
             nn.init.constant_(layer.bias, 0)
+
+
+def print_info(args):
+    print()
+    print("##### Information #####")
+    print("# model : ", args.model)
+    print("# channels : ", args.c)
+    if args.phase == "train":
+        print("# classes : ", args.classes)
+        print("# epoch : ", args.epoch)
+        print("# batch_size : ", args.batch_size)
+        print("# save_freq  : ", args.save_freq)
+    elif args.phase == "test":
+        print("# classes : ", args.classes)
+    else:
+        print("# weight path : ", args.load_path)
+        print("# image path : ", args.image_path)
+    print("#######################")
+    print()
 
 
 class early_stopping():
@@ -109,22 +122,3 @@ class early_stopping():
             if self.count == self.patience:
                 print('INFO: Early stopping')
                 self.stop = True
-
-
-def print_info(args):
-    print()
-    print("##### Information #####")
-    print("# model : ", args.model)
-    print("# channels : ", args.c)
-    if args.phase == "train":
-        print("# classes : ", args.classes)
-        print("# epoch : ", args.epoch)
-        print("# batch_size : ", args.batch_size)
-        print("# save_freq  : ", args.save_freq)
-    elif args.phase == "test":
-        print("# classes : ", args.classes)
-    else:
-        print("# weight path : ", args.load_path)
-        print("# image path : ", args.image_path)
-    print("#######################")
-    print()
