@@ -5,7 +5,7 @@
 
 <h2> :pencil: About the project </h2>
 
-This project aims to classify image in [**ANIMAL-10**](https://www.kaggle.com/alessiocorrado99/animals10) dataset with deep learning models. I try to implement it from scratch. 
+This project aims to classify images in [**ANIMAL-10**](https://www.kaggle.com/alessiocorrado99/animals10) dataset with deep learning models. I try to implement it from scratch. 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2> :computer: Train/Test </h2>
