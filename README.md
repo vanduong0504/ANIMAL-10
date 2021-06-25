@@ -29,7 +29,39 @@ python main.py --models "VGG16" --phase "test" --load_path "path/to/weight" --im
 
 <h2> :floppy_disk: Dataset </h2>
 
-I use **CIFAR10** as example dataset for my implementation. You can reimplement `data.py` for your custom dataset. 
+I use **CIFAR10** as example dataset for my implementation. For your dataset, follow this structure:
+
+    📂 your dataset
+    |─── train-set
+    |       |─────class-1
+    |       |      +-- *.jpg
+    |       |─────class-2
+    |       |     +-- *.jpg
+    |─── test-set
+    |       |─────class-1
+    |       |      +-- *.jpg
+    |       |─────class-2
+    |       |     +-- *.jpg
+
+    # For example
+    📂 Dog-and-Cat
+    |─── train-set
+    |       |─────class-1
+    |       |      +-- 001.jpg
+    |       |      +-- 002.jpg
+    |       |─────class-2
+    |       |      +-- 003.jpg
+    |       |      +-- 004.jpg
+    |─── test-set
+    |       |─────class-1
+    |       |      +-- 001.jpg
+    |       |      +-- 002.jpg
+    |       |─────class-2
+    |       |      +-- 003.jpg
+    |       |      +-- 004.jpg
+
+
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 

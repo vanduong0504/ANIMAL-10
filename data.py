@@ -1,13 +1,13 @@
+import os
 from utils import *
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms, utils
+from torchvision import datasets, transforms
 
 
-class CIFAR:
-    def __init__(self, save_floder='./data'):
-        self.floder = save_floder
-        self.train = datasets.CIFAR10(root=self.floder, train=True, download=True, transform=self.transform(1))
-        self.test = datasets.CIFAR10(root=self.floder, train=False, download=True, transform=self.transform(0))
+class Dataset:
+    def __init__(self, dataroot):
+        self.train = datasets.ImageFolder(root=os.path.join(dataroot,'train'), transform=self.transform(1))
+        self.test = datasets.ImageFolder(root=os.path.join(dataroot,'test'), transform=self.transform(0))
         self.classes = self.train.class_to_idx
 
     def transform(self, type):

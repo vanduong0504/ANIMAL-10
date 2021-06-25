@@ -1,6 +1,7 @@
 import os
 import time
 import torch
+from torchvision import datasets
 from utils import *
 import torch.nn as nn
 from tqdm import tqdm
@@ -13,6 +14,7 @@ class model:
     def __init__(self, args):
         self.model = args.model
         self.phase = args.phase
+        self.dataroot = args.dataroot
         self.channels = args.c
         self.classes = args.classes
 
@@ -50,7 +52,7 @@ class model:
 
         # Define dataset
         if self.image_path is None:
-            data = CIFAR()
+            data = datasets(self.dataroot)
             traindata = data.train
             testdata = data.test
             self.trainloader = data.loader(traindata, batch_sizes=self.batch_size)

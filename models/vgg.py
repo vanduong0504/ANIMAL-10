@@ -37,7 +37,7 @@ class VGG(nn.Module):
 
         # Coding format torchvision.models.vgg
         self.features = nn.Sequential(*features)
-        self.avgpool = nn.AdaptiveAvgPool2d(output_size=(7, 7))
+        self.avgpool = nn.AdaptiveAvgPool2d(output_size=7)
         self.classifier = nn.Sequential(*self.classifier_block(fc, self.nums_class))
 
     def forward(self, input):
@@ -58,12 +58,12 @@ class VGG(nn.Module):
             block += [nn.BatchNorm2d(num_features=out_cha)]
             block += [nn.ReLU(inplace=True)]
             in_cha = out_cha
-        block += [nn.MaxPool2d(kernel_size=(2, 2))]
+        block += [nn.MaxPool2d(kernel_size=2)]
         return block
 
     def classifier_block(self, fc, num_class):
         block = []
-        for _, values in enumerate(fc.values(), 1):
+        for values in fc.values():
             in_fea, out_fea = values
             try:
                 block += [nn.Linear(in_features=in_fea, out_features=out_fea)]

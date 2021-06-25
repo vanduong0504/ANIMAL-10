@@ -9,8 +9,8 @@ def parse_args():
                         help="[VGG16, VGG19, RESNET18, RESNET34, RESNET50, RESNET101,...]")
     parser.add_argument("--phase", type=str, default=None,
                         help="[train / test]")
-    parser.add_argument("--dataroot", type=str, default="./data",
-                        help="Path to datasets. (default: `./data`)")
+    parser.add_argument("--dataroot", type=str, default=None,
+                        help="Path to datasets.")
     parser.add_argument("--c", default=3, type=int, metavar="CHANNELS",
                         help="Number of image channels. (default: 3)")
     parser.add_argument("--classes", default=10, type=int,

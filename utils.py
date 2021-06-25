@@ -6,18 +6,22 @@ import torch.nn as nn
 from torchvision import utils
 import matplotlib.pyplot as plt
 
-# Mean and std for CIFAR10 after calculate with mean_std function
-mean, std = (0.4915, 0.4822, 0.4466), (0.2465, 0.2430, 0.2609)
+# Mean and std of ImageNet
+mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
 
 
 def mean_std(loader):
+    """
+    This function use to calculate mean and standard deviation of your dataset. 
+    This mean and std use in data.py to normalze your data.
+    """
     total_means, total_variations, nums_batches = 0, 0, 0
     for data, _ in loader:
         mean_batch, variation = 0, 0
-        # mean
+        # Mean
         mean_batch = torch.mean(data, dim=[0, 2, 3])
 
-        # variation
+        # Variation
         square_batch = torch.pow(data - mean_batch.view(1, -1, 1, 1), 2)
         variation = torch.mean(square_batch, dim=[0, 2, 3])
 
@@ -32,8 +36,7 @@ def mean_std(loader):
 
 def show_image(classes=None, image_path=None, loader=None):
     """
-    This function use to show_image for batch from loader or
-    image from folder.
+    This function use to show_image for batch from loader or single image.
     """
     if image_path is not None:
         image = cv2.imread(image_path)
