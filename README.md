@@ -69,7 +69,7 @@ For custom dataset, follow this structure:
 
 My configuration for training phase:
 <ul>
-  <li> <strong>Batch size</strong> : 128</li>
+  <li> <strong>Batch size</strong> : 64</li>
   <li> <strong>Epoch</strong> : 50</li>
   <li> <strong>Learing rate</strong> : 0.001</li>
 </ul>
@@ -95,12 +95,12 @@ My configuration for training phase:
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>134.3M</td>
-    <td>84.97</td>
+    <td>...</td>
   </tr>
   <tr>
     <td>VGG19</td>
     <td>139.6M</td>
-    <td>85.01</td>
+    <td>...</td>
   </tr>
   
   <tr>

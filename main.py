@@ -4,7 +4,7 @@ from model import model
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="CIFAR 10 Image classification")
+    parser = argparse.ArgumentParser(description="Image classification from scratch")
     parser.add_argument("--model", type=str, required=True,
                         help="[VGG16, VGG19, RESNET18, RESNET34, RESNET50, RESNET101,...]")
     parser.add_argument("--phase", type=str, default=None,
@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument("--batch_size", default=128, type=int, metavar="BS",
                         help="Input batch size. (default: 128)")
     parser.add_argument("--lr", type=float, default=1e-1,
-                        help="Learning rate. (default:1e-3)")
+                        help="Learning rate. (default:1e-1)")
     parser.add_argument("--device", type=str, default="cuda",
                         help="Set gpu mode; [cpu, cuda]")
     parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",

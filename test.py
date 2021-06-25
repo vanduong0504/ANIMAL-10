@@ -11,9 +11,9 @@ def main():
     net = model(parse_args())
     net.build_model()
 
-    # Label dictionary for cifar10:
-    label = {'plane': 0, 'car': 1, 'bird': 2, 'cat': 3,
-             'deer': 4, 'dog': 5, 'frog': 6, 'horse': 7, 'ship': 8, 'truck': 9}
+    # Label dictionary for animal10:
+    label = {'butterfly': 0, 'cat': 1, 'chicken': 2, 'cow': 3, 'dog': 4, 
+    'elephant': 5, 'horse': 6, 'sheep': 7, 'spider': 8, 'squirrel': 9}
 
     if net.image_path is not None:
         image = show_image(image_path=net.image_path)
