@@ -5,7 +5,7 @@
 
 <h2> :pencil: About the project </h2>
 
-This project aims to classify image in [**ANIMAL-10**](https://www.kaggle.com/alessiocorrado99/animals10) dataset with deep learning models. I try to implement it from scratch. 
+This project aims to classify images in [**ANIMAL-10**](https://www.kaggle.com/alessiocorrado99/animals10) dataset with deep learning models. I try to implement it from scratch. 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h2> :computer: Train/Test </h2>
@@ -33,32 +33,32 @@ For custom dataset, follow this structure:
 
     📂 your dataset
     |─── train
-    |       |─────class-1
-    |       |      +-- *.jpg
-    |       |─────class-2
-    |       |     +-- *.jpg
+    |      |─────class-1
+    |      |        +-- *.jpg
+    |      |─────class-2
+    |      |        +-- *.jpg
     |─── test
-    |       |─────class-1
-    |       |      +-- *.jpg
-    |       |─────class-2
-    |       |     +-- *.jpg
+    |      |─────class-1
+    |      |        +-- *.jpg
+    |      |─────class-2
+    |      |        +-- *.jpg
 
     # For example
     📂 Dog-and-Cat
     |─── train
-    |       |─────class-1
-    |       |      +-- 001.jpg
-    |       |      +-- 002.jpg
-    |       |─────class-2
-    |       |      +-- 003.jpg
-    |       |      +-- 004.jpg
+    |      |─────class-1
+    |      |        +-- 001.jpg
+    |      |        +-- 002.jpg
+    |      |─────class-2
+    |      |        +-- 003.jpg
+    |      |        +-- 004.jpg
     |─── test
-    |       |─────class-1
-    |       |      +-- 001.jpg
-    |       |      +-- 002.jpg
-    |       |─────class-2
-    |       |      +-- 003.jpg
-    |       |      +-- 004.jpg
+    |      |─────class-1
+    |      |        +-- 001.jpg
+    |      |        +-- 002.jpg
+    |      |─────class-2
+    |      |        +-- 003.jpg
+    |      |        +-- 004.jpg
 
 
 
