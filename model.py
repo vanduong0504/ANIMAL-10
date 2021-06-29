@@ -99,13 +99,13 @@ class model:
 
                 iteration += 1
                 loop.set_description(f"Epoch [{epoch+1}/{self.epoch}]")
-                loop.set_postfix(loss=loss.item(), acc_train=accurary * 100)
+                loop.set_postfix(Loss=loss.item(), Acc_train=accurary * 100)
                 time.sleep(0.1)
 
             mean_loss = sum(losses) / len(losses)
             mean_acc = sum(acc) / len(acc)
             scheduler.step()
-            print(f"Epoch [{epoch+1}/{self.epoch}] Iter: {iteration}  Loss: {mean_loss} Acc: {mean_acc}")
+            print(f"Epoch [{epoch+1}/{self.epoch}] Iter: {iteration} Acc: {mean_acc} Loss: {mean_loss}")
 
             # Early stopping
             early_stop(mean_loss)
