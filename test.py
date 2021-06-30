@@ -1,14 +1,15 @@
 import torch
 from utils import *
 from model import model
-from main import parse_args
+from option import Options
 
 
 def main():
     """
     This function use to test an image and output a class name
     """
-    net = model(parse_args())
+    opt = Options().parse()
+    net = model(opt)
     net.build_model()
 
     # Label dictionary for animal10:

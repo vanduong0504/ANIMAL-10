@@ -84,21 +84,21 @@ def init_weight(net):
             nn.init.constant_(layer.bias, 0)
 
 
-def print_info(args):
+def print_info(opt):
     print()
     print("##### Information #####")
-    print("# model : ", args.model)
-    print("# channels : ", args.c)
-    if args.phase == "train":
-        print("# classes : ", args.classes)
-        print("# epoch : ", args.epoch)
-        print("# batch_size : ", args.batch_size)
-        print("# save_freq  : ", args.save_freq)
-    elif args.phase == "test":
-        print("# classes : ", args.classes)
+    print("# model : ", opt.model)
+    print("# channels : ", opt.c)
+    if opt.phase == "train":
+        print("# classes : ", opt.classes)
+        print("# epoch : ", opt.epoch)
+        print("# batch_size : ", opt.batch_size)
+        print("# save_freq  : ", opt.save_freq)
+    elif opt.phase == "test":
+        print("# classes : ", opt.classes)
     else:
-        print("# weight path : ", args.load_path)
-        print("# image path : ", args.image_path)
+        print("# weight path : ", opt.load_path)
+        print("# image path : ", opt.image_path)
     print("#######################")
     print()
 

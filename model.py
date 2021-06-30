@@ -9,58 +9,42 @@ from models import vgg, resnet
 
 
 class model:
-    def __init__(self, args):
-        self.model = args.model
-        self.phase = args.phase
-        self.dataroot = args.dataroot
-        self.channels = args.c
-        self.classes = args.classes
-
-        self.epoch = args.epoch
-        self.batch_size = args.batch_size
-        self.lr = args.lr
-
-        self.device = args.device
-        self.save_freq = args.save_freq
-        self.save_path = args.save_path
-        self.load_path = args.load_path
-        self.image_path = args.image_path
-        self.save_type = args.save_type
-        self.stop = args.stop
+    def __init__(self, opt):
+        self.opt = opt
 
         # Summary information
-        print_info(args)
+        print_info(self.opt)
 
     def build_model(self):
         """
         This function build dataset, model and initialize parameters.
         """
-        name = self.model
+        name = self.opt.model
         if name.find("VGG"):
-            self.net = vgg.create_model(name, self.channels, self.classes).to(self.device)
+            self.net = vgg.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
         elif name.find("RESNET"):
-            self.net = resnet.create_model(name, self.channels, self.classes).to(self.device)
+            self.net = resnet.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
 
         # Define dataset
-        if self.image_path is None:
-            self.data = Dataset(self.dataroot)
-            self.trainloader = self.data.loader(self.data.train, self.batch_size)
-            self.testloader = self.data.loader(self.data.test, self.batch_size)
+        if self.opt.image_path is None:
+            self.data = Dataset(self.opt.dataroot)
+            self.trainloader = self.data.loader(self.data.train, self.opt.batch_size)
+            self.testloader = self.data.loader(self.data.test, self.opt.batch_size)
 
         # Weight initialization
-        if self.load_path is None:
+        if self.opt.load_path is None:
             print("Weight Initialization")
             init_weight(self.net)
         else:
-            print(f"Loading weight from {self.load_path}")
-            self.load(self.load_path)
+            print(f"Loading weight from {self.opt.load_path}")
+            self.load(self.opt.load_path)
         print()
 
     def load(self, path):
         self.net.load_state_dict(torch.load(path))
 
     def save(self, epoch, save_type):
-        path = f"{self.save_path }/{self.model}/"
+        path = f"{self.opt.save_path }/{self.model}/"
         if save_type == "N_epoch":
             torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_{epoch+1}.pth")
         else:
@@ -75,12 +59,12 @@ class model:
         self.net.train()
 
         iteration = 0
-        for epoch in range(self.epoch):
+        for epoch in range(self.opt.epoch):
             losses = []
             acc = []
             loop = tqdm((self.trainloader), total=len(self.trainloader), leave=False)
             for i, (inputs, labels) in enumerate(loop):
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs, labels = inputs.to(self.opt.device), labels.to(self.opt.device)
                 outputs = self.net(inputs)
 
                 optimizer.zero_grad()
@@ -98,38 +82,38 @@ class model:
                 acc.append(accurary)
 
                 iteration += 1
-                loop.set_description(f"Epoch [{epoch+1}/{self.epoch}]")
+                loop.set_description(f"Epoch [{epoch+1}/{self.opt.epoch}]")
                 loop.set_postfix(Loss=loss.item(), Acc_train=accurary * 100)
                 time.sleep(0.1)
 
             mean_loss = sum(losses) / len(losses)
             mean_acc = sum(acc) / len(acc)
             scheduler.step()
-            print(f"Epoch [{epoch+1}/{self.epoch}] Iter: {iteration} Acc: {mean_acc} Loss: {mean_loss}")
+            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration} Acc: {mean_acc} Loss: {mean_loss}")
 
             # Early stopping
             early_stop(mean_loss)
             if early_stop.stop:
                 # Save best epoch
-                self.save(epoch - self.stop, self.save_type)
+                self.save(epoch - self.opt.stop, self.opt.save_type)
                 return
 
             # Save epoch
             if epoch % self.save_freq - 1 == 0:
-                self.save(epoch, self.save_type)
-            elif (self.save_type == "best_epoch") and (early_stop.count == 0):
-                self.save(epoch, self.save_type)
+                self.save(epoch, self.opt.save_type)
+            elif (self.opt.save_type == "best_epoch") and (early_stop.count == 0):
+                self.save(epoch, self.opt.save_type)
 
     def test(self):
         # Load model
-        self.load(self.load_path)
+        self.load(self.opt.load_path)
         self.net.eval()
 
         correct = 0
         total = 0
         with torch.no_grad():
             for (inputs, labels) in self.testloader:
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs, labels = inputs.to(self.opt.device), labels.to(self.opt.device)
                 outputs = self.net(inputs)
 
                 predicted = torch.argmax(outputs, 1)
