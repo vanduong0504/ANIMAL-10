@@ -1,33 +1,32 @@
 import torch
 import torch.nn as nn
-import collections as cl
 
 # Define dictionary where (key,values) = (blockname,[in_channels, out_channels, repeat])"
 Resnet_block = {
 
-    'resnet18': cl.OrderedDict({
+    'resnet18': {
         'block_2': [64, 64, 2],
         'block_3': [64, 128, 2],
         'block_4': [128, 256, 2],
-        'block_5': [256, 512, 2]}),
+        'block_5': [256, 512, 2]},
 
-    'resnet34': cl.OrderedDict({
+    'resnet34': {
         'block_2': [64, 64, 3],
         'block_3': [64, 128, 4],
         'block_4': [128, 256, 6],
-        'block_5': [256, 512, 3]}),
+        'block_5': [256, 512, 3]},
 
-    'resnet50': cl.OrderedDict({
+    'resnet50': {
         'block_2': [64, 64, 3],
         'block_3': [64, 128, 4],
         'block_4': [128, 256, 6],
-        'block_5': [256, 512, 3]}),
+        'block_5': [256, 512, 3]},
 
-    'resnet152': cl.OrderedDict({
+    'resnet152': {
         'block_2': [64, 64, 3],
         'block_3': [64, 128, 8],
         'block_4': [128, 256, 36],
-        'block_5': [256, 512, 3]})
+        'block_5': [256, 512, 3]}
 }
 
 

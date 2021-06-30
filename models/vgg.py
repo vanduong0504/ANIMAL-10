@@ -1,27 +1,26 @@
 import torch
 import torch.nn as nn
-import collections as cl
 
 # Define dictionary where (key,values) = (blockname,[nums_conv2d,in_channels,out_channels])"
 VGG_block = {
 
-    'vgg16': cl.OrderedDict({
+    'vgg16': {
         'block_1': [2, 'image_channels', 64],
         'block_2': [2, 64, 128],
         'block_3': [3, 128, 256],
         'block_4': [3, 256, 512],
-        'block_5': [3, 512, 512]}),
+        'block_5': [3, 512, 512]},
 
-    'vgg19': cl.OrderedDict({
+    'vgg19': {
         'block_1': [2, 3, 64],
         'block_2': [2, 64, 128],
         'block_3': [4, 128, 256],
         'block_4': [4, 256, 512],
-        'block_5': [4, 512, 512]})
+        'block_5': [4, 512, 512]}
 }
 
 # Define dictionary where (key,values) = (fc,[in_features,out_features])"
-fc = cl.OrderedDict({'fc1': [25088, 4096], 'fc2': [4096, 4096], 'fc3': [4096, 'num_class']})
+fc = {'fc1': [25088, 4096], 'fc2': [4096, 4096], 'fc3': [4096, 'num_class']}
 
 
 class VGG(nn.Module):
