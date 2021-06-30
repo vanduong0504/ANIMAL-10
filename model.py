@@ -52,8 +52,8 @@ class model:
 
     def train(self):
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.SGD(self.net.parameters(), self.lr, momentum=0.9, weight_decay=1e-3)
-        early_stop = early_stopping(self.stop)
+        optimizer = optim.SGD(self.net.parameters(), self.opt.lr, momentum=0.9, weight_decay=1e-3)
+        early_stop = early_stopping(self.opt.stop)
         scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=5, T_mult=2)
 
         self.net.train()

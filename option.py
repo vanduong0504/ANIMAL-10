@@ -58,8 +58,7 @@ class Options:
         return args
 
     def gather_options(self):
-        parser = argparse.ArgumentParser(
-            description="Generate Image on MNIST and FashionMNIST")
+        parser = argparse.ArgumentParser(description="Image classification models")
         self.parser = self.initialize(parser)
 
         return self.check_args(self.parser.parse_args())
