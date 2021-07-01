@@ -20,10 +20,13 @@ class model:
         This function build dataset, model and initialize parameters.
         """
         name = self.opt.model
-        if name.find("VGG"):
+        if name.startswith("ALEXNET"):
+            self.net = resnet.create_model(self.opt.c, self.opt.classes).to(self.opt.device)
+        elif name.startswith("VGG"):
             self.net = vgg.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
-        elif name.find("RESNET"):
+        elif name.startswith("RESNET"):
             self.net = resnet.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
+        
 
         # Define dataset
         if self.opt.image_path is None:

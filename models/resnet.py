@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-# Define dictionary where (key,values) = (blockname,[in_channels, out_channels, repeat])"
+# Define dictionary where (key,values) = (blockname: [in_channels, out_channels, repeat])"
 Resnet_block = {
 
     'resnet18': {
