@@ -25,7 +25,7 @@ class AlexNet(nn.Module):
         for values in ALEX_block.values():
             features += self.feature_block(*values)
 
-        # Coding format torchvision.models.vgg
+        # Coding format torchvision.models.alexnet
         self.features = nn.Sequential(*features)
         self.avgpool = nn.AdaptiveAvgPool2d(output_size=6)
         self.classifier = nn.Sequential(*self.classifier_block(fc))
