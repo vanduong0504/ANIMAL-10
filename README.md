@@ -91,11 +91,18 @@ My configuration for training phase:
 </thead>
 <tbody>
   
+
+  <tr>
+    <td rowspan="1">AlexNet</td>
+    <td>----</td>
+    <td>58,3M</td>
+    <td>...</td>
+  </tr>
   <tr>
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>134.3M</td>
-    <td>...</td>
+    <td>85.18</td>
   </tr>
   <tr>
     <td>VGG19</td>
@@ -104,7 +111,7 @@ My configuration for training phase:
   </tr>
   
   <tr>
-    <td rowspan="4">Resnet</td>
+    <td rowspan="4">ResNet</td>
     <td>Resnet18</td>
     <td>11.2M</td>
     <td>...</td>

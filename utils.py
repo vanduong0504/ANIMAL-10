@@ -56,12 +56,6 @@ def show_image(classes=None, image_path=None, loader=None):
     return grid
 
 
-def check_folder(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-    return dir
-
-
 def reverse_Normalize(x, mean, std):
     mean = torch.from_numpy(np.array(mean))
     std = torch.from_numpy(np.array(std))

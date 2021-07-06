@@ -26,7 +26,6 @@ class model:
             self.net = vgg.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
         elif name.startswith("RESNET"):
             self.net = resnet.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
-        
 
         # Define dataset
         if self.opt.image_path is None:
@@ -46,7 +45,7 @@ class model:
     def load(self, path):
         self.net.load_state_dict(torch.load(path))
 
-    def save(self, epoch, save_type):
+    def save(self, save_type, epoch=None):
         path = f"{self.opt.save_path }/{self.model}/"
         if save_type == "N_epoch":
             torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_{epoch+1}.pth")
@@ -63,8 +62,7 @@ class model:
 
         iteration = 0
         for epoch in range(self.opt.epoch):
-            losses = []
-            acc = []
+            losses, acc = [], []
             loop = tqdm((self.trainloader), total=len(self.trainloader), leave=False)
             for i, (inputs, labels) in enumerate(loop):
                 inputs, labels = inputs.to(self.opt.device), labels.to(self.opt.device)
@@ -102,10 +100,10 @@ class model:
                 return
 
             # Save epoch
-            if epoch % self.save_freq - 1 == 0:
-                self.save(epoch, self.opt.save_type)
-            elif (self.opt.save_type == "best_epoch") and (early_stop.count == 0):
-                self.save(epoch, self.opt.save_type)
+            if early_stop.count == 0:
+                self.save(self.opt.save_type)
+            elif (self.opt.save_type == 'N_epoch') and (epoch % self.opt.save_freq - 1 == 0):
+                self.save(self.opt.save_type, epoch)
 
     def test(self):
         # Load model
