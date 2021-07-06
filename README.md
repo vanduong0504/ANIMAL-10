@@ -93,13 +93,18 @@ My configuration for training phase:
   
 
   <tr>
-    <td rowspan="1">AlexNet</td>
-    <td>----</td>
+    <td rowspan="1">
+        <a href="https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">AlexNet</a>
+    </td>
+    <td>--</td>
     <td>58,3M</td>
     <td>...</td>
   </tr>
+
   <tr>
-    <td rowspan="2">VGG</td>
+    <td rowspan="2">
+        <a href="https://arxiv.org/abs/1409.1556v6">VGG</a>
+    </td>
     <td>VGG16</td>
     <td>134.3M</td>
     <td>...</td>
@@ -111,7 +116,9 @@ My configuration for training phase:
   </tr>
   
   <tr>
-    <td rowspan="4">ResNet</td>
+    <td rowspan="4">
+          <a href="https://arxiv.org/abs/1512.03385">ResNet</a>
+    </td>
     <td>Resnet18</td>
     <td>11.2M</td>
     <td>...</td>
