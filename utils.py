@@ -56,6 +56,12 @@ def show_image(classes=None, image_path=None, loader=None):
     return grid
 
 
+def check_folder(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    return dir
+
+
 def reverse_Normalize(x, mean, std):
     mean = torch.from_numpy(np.array(mean))
     std = torch.from_numpy(np.array(std))
@@ -79,13 +85,13 @@ def init_weight(net):
 
 
 def print_info(opt):
-    print()
     print("##### Information #####")
     print("# model : ", opt.model)
-    print("# channels : ", opt.c)
+    print("# channels : ", opt.channels)
     if opt.phase == "train":
         print("# classes : ", opt.classes)
         print("# epoch : ", opt.epoch)
+        print("# learning rate : ", opt.lr)
         print("# batch_size : ", opt.batch_size)
         print("# save_freq  : ", opt.save_freq)
     elif opt.phase == "test":
@@ -93,8 +99,7 @@ def print_info(opt):
     else:
         print("# weight path : ", opt.load_path)
         print("# image path : ", opt.image_path)
-    print("#######################")
-    print()
+    print("#######################", end='\n\n')
 
 
 class early_stopping():

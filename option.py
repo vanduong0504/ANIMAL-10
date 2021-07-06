@@ -13,7 +13,7 @@ class Options:
                             help="[train, test]")
         parser.add_argument("--dataroot", type=str, default=None,
                             help="Path to datasets.")
-        parser.add_argument("--c", default=3, type=int, metavar="CHANNELS",
+        parser.add_argument("--channels", default=3, type=int,
                             help="Number of image channels. (default: 3)")
         parser.add_argument("--classes", default=10, type=int,
                             help="Number of classes. (default: 10)")

@@ -1,5 +1,5 @@
 import os
-from utils import *
+from utils import mean, std
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 

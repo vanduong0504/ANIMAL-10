@@ -62,4 +62,5 @@ class AlexNet(nn.Module):
         return block
 
 def create_model(img_channel, num_classes):
-        return AlexNet(img_channel, num_classes)
+    print("AlexNet created")
+    return AlexNet(img_channel, num_classes)

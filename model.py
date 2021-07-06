@@ -5,7 +5,7 @@ import torch.nn as nn
 from tqdm import tqdm
 from data import Dataset
 import torch.optim as optim
-from models import vgg, resnet
+from models import vgg, resnet, alex
 
 
 class model:
@@ -19,38 +19,39 @@ class model:
         """
         This function build dataset, model and initialize parameters.
         """
+        print("##### Achitecture #####")
         name = self.opt.model
         if name.startswith("ALEXNET"):
-            self.net = resnet.create_model(self.opt.c, self.opt.classes).to(self.opt.device)
+            self.net = alex.create_model(self.opt.channels, self.opt.classes).to(self.opt.device)
         elif name.startswith("VGG"):
-            self.net = vgg.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
+            self.net = vgg.create_model(name, self.opt.channels, self.opt.classes).to(self.opt.device)
         elif name.startswith("RESNET"):
-            self.net = resnet.create_model(name, self.opt.c, self.opt.classes).to(self.opt.device)
-
-        # Define dataset
-        if self.opt.image_path is None:
-            self.data = Dataset(self.opt.dataroot)
-            self.trainloader = self.data.loader(self.data.train, self.opt.batch_size)
-            self.testloader = self.data.loader(self.data.test, self.opt.batch_size)
+            self.net = resnet.create_model(name, self.opt.channels, self.opt.classes).to(self.opt.device)
 
         # Weight initialization
         if self.opt.load_path is None:
             print("Weight Initialization")
             init_weight(self.net)
         else:
-            print(f"Loading weight from {self.opt.load_path}")
+            print(f"Loaded weight from {self.opt.load_path}")
             self.load(self.opt.load_path)
-        print()
+        print("#######################", end='\n\n')
+
+        # Define dataset
+        if self.opt.image_path is None:
+            data = Dataset(self.opt.dataroot)
+            self.trainloader = data.loader(data.train, self.opt.batch_size)
+            self.testloader = data.loader(data.test, self.opt.batch_size)
 
     def load(self, path):
         self.net.load_state_dict(torch.load(path))
 
     def save(self, save_type, epoch=None):
-        path = f"{self.opt.save_path }/{self.model}/"
+        path = f"{self.opt.save_path }/{self.opt.model}"
         if save_type == "N_epoch":
-            torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_{epoch+1}.pth")
+            torch.save(self.net.state_dict(), check_folder(path) + f"{self.opt.model}_{epoch+1}.pth")
         else:
-            torch.save(self.net.state_dict(), check_folder(path) + f"{self.model}_best.pth")
+            torch.save(self.net.state_dict(), check_folder(path) + f"{self.opt.model}_best.pth")
 
     def train(self):
         criterion = nn.CrossEntropyLoss()
@@ -89,8 +90,8 @@ class model:
 
             mean_loss = sum(losses) / len(losses)
             mean_acc = sum(acc) / len(acc)
-            scheduler.step()
-            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration} Acc: {mean_acc} Loss: {mean_loss}")
+
+            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration}  Loss: {mean_loss} Acc: {mean_acc}")
 
             # Early stopping
             early_stop(mean_loss)
@@ -100,14 +101,12 @@ class model:
                 return
 
             # Save epoch
-            if early_stop.count == 0:
+            if (self.opt.save_type == 'N_epoch') and (early_stop.count == 0):
                 self.save(self.opt.save_type)
             elif (self.opt.save_type == 'N_epoch') and (epoch % self.opt.save_freq - 1 == 0):
                 self.save(self.opt.save_type, epoch)
 
     def test(self):
-        # Load model
-        self.load(self.opt.load_path)
         self.net.eval()
 
         correct = 0

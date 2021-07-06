@@ -71,7 +71,7 @@ My configuration for training phase:
 <ul>
   <li> <strong>Batch size</strong> : 64</li>
   <li> <strong>Epoch</strong> : 20</li>
-  <li> <strong>Learing rate</strong> : 0.1</li>
+  <li> <strong>Learing rate</strong> : 0.001</li>
 </ul>
 
 
@@ -102,7 +102,7 @@ My configuration for training phase:
     <td rowspan="2">VGG</td>
     <td>VGG16</td>
     <td>134.3M</td>
-    <td>85.18</td>
+    <td>...</td>
   </tr>
   <tr>
     <td>VGG19</td>
