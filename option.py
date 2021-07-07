@@ -26,7 +26,7 @@ class Options:
         parser.add_argument("--device", type=str, default="cuda",
                             help="Set gpu mode; [cpu, cuda]")
         parser.add_argument("--save_type", type=str, default='best_epoch', metavar="ST",
-                            help=" [best_epoch, N_epochs]")
+                            help=" [best_epoch, N_epoch]")
         parser.add_argument("--save_freq", type=int, default=10, metavar="SF",
                             help="Number of epochs to save latest results.(default: 10)")
         parser.add_argument("--save_path", type=str, default="./weight", metavar="SP",

@@ -101,7 +101,7 @@ class model:
                 return
 
             # Save epoch
-            if (self.opt.save_type == 'N_epoch') and (early_stop.count == 0):
+            if (self.opt.save_type == 'best_epoch') and (early_stop.count == 0):
                 self.save(self.opt.save_type)
             elif (self.opt.save_type == 'N_epoch') and (epoch % self.opt.save_freq - 1 == 0):
                 self.save(self.opt.save_type, epoch)
