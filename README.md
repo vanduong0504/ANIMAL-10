@@ -98,7 +98,7 @@ My configuration for training phase:
     </td>
     <td>--</td>
     <td>58,3M</td>
-    <td>...</td>
+    <td>52.00</td>
   </tr>
 
   <tr>
@@ -107,7 +107,7 @@ My configuration for training phase:
     </td>
     <td>VGG16</td>
     <td>134.3M</td>
-    <td>...</td>
+    <td>75.00</td>
   </tr>
   <tr>
     <td>VGG19</td>

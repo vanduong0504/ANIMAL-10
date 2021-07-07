@@ -180,13 +180,13 @@ class Resnet(nn.Module):
 
 
 def create_model(name, img_channel, num_classes):
-    if name.find('18'):
+    if name.endswith('18'):
         print("ResNet18 created")
         return Resnet(Resnet_block['resnet18'], img_channel, num_classes, shortcut=2)
-    elif name.find('34'):
+    elif name.endswith('34'):
         print("ResNet34 created")
         return Resnet(Resnet_block['resnet34'], img_channel, num_classes, shortcut=2)
-    elif name.find('50'):
+    elif name.endswith('50'):
         print("ResNet50 created")
         return Resnet(Resnet_block['resnet50'], img_channel, num_classes, shortcut=3)
     else:

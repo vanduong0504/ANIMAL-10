@@ -73,7 +73,7 @@ class VGG(nn.Module):
 
 
 def create_model(name, img_channel, num_classes):
-    if name.find('16'):
+    if name.endswith('16'):
         print("VGG16 created")
         return VGG(VGG_block['vgg16'], img_channel, num_classes)
     else:

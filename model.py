@@ -47,11 +47,11 @@ class model:
         self.net.load_state_dict(torch.load(path))
 
     def save(self, save_type, epoch=None):
-        path = f"{self.opt.save_path }/{self.opt.model}"
+        path = f"{self.opt.save_path}/{self.opt.model}/"
         if save_type == "N_epoch":
-            torch.save(self.net.state_dict(), check_folder(path) + f"{self.opt.model}_{epoch+1}.pth")
+            torch.save(self.net.state_dict(), check_folder(path) + f"{epoch}.pth")
         else:
-            torch.save(self.net.state_dict(), check_folder(path) + f"{self.opt.model}_best.pth")
+            torch.save(self.net.state_dict(), check_folder(path) + "best.pth")
 
     def train(self):
         criterion = nn.CrossEntropyLoss()
@@ -104,7 +104,7 @@ class model:
             if (self.opt.save_type == 'best_epoch') and (early_stop.count == 0):
                 self.save(self.opt.save_type)
             elif (self.opt.save_type == 'N_epoch') and (epoch % self.opt.save_freq - 1 == 0):
-                self.save(self.opt.save_type, epoch)
+                self.save(self.opt.save_type, epoch+1)
 
     def test(self):
         self.net.eval()
