@@ -89,9 +89,9 @@ class model:
                 time.sleep(0.1)
 
             mean_loss = sum(losses) / len(losses)
-            mean_acc = sum(acc) / len(acc)
+            mean_acc = (sum(acc) / len(acc)) * 100
 
-            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration}  Loss: {mean_loss} Acc: {mean_acc}")
+            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration}  Loss: {round(mean_loss,4)} Acc: {round(mean_acc,2)}")
 
             # Early stopping
             early_stop(mean_loss)
