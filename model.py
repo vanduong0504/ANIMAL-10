@@ -39,9 +39,9 @@ class model:
 
         # Define dataset
         if self.opt.image_path is None:
-            data = Dataset(self.opt.dataroot)
-            self.trainloader = data.loader(data.train, self.opt.batch_size)
-            self.testloader = data.loader(data.test, self.opt.batch_size)
+            self.data = Dataset(self.opt.dataroot)
+            self.trainloader = self.data.loader(self.data.train, self.opt.batch_size)
+            self.testloader = self.data.loader(self.data.test, self.opt.batch_size)
 
     def load(self, path):
         self.net.load_state_dict(torch.load(path))
@@ -120,4 +120,4 @@ class model:
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
-            print(f"Accuracy of the network on the {len(self.data.test)} test images: {100*(correct/total)}%")
+            print(f"Accuracy of the network on the {len(self.data.test)} test images: {100*round((correct/total),2)}%")
