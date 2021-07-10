@@ -59,9 +59,9 @@ class VGG(nn.Module):
         block += [nn.MaxPool2d(kernel_size=2)]
         return block
 
-    def classifier_block(self, fc):
+    def classifier_block(self, fully_layer):
         block = []
-        for values in fc.values():
+        for values in fully_layer.values():
             in_fea, out_fea = values
             if isinstance(out_fea, int):
                 block += [nn.Linear(in_features=in_fea, out_features=out_fea)]
@@ -79,4 +79,3 @@ def create_model(name, img_channel, num_classes):
     else:
         print("VGG19 created")
         return VGG(VGG_block['vgg19'], img_channel, num_classes)
-

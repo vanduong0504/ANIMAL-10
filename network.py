@@ -8,26 +8,29 @@ import torch.optim as optim
 from models import vgg, resnet, alex
 
 
-class model:
+class Model:
     def __init__(self, opt):
         self.opt = opt
-
         # Summary information
-        print_info(self.opt)
+        print_info(opt)
+
+        # Define dataset
+        if opt.image_path is None:
+            self.data = Dataset(opt.dataroot)
+            self.trainloader = self.data.loader(self.data.train, opt.batch_size)
+            self.testloader = self.data.loader(self.data.test, opt.batch_size)
+
+        # Architecture define
+        print("##### Architecture #####")
+        name = opt.model
+        if name.startswith("ALEXNET"):
+            self.net = alex.create_model(opt.channels, opt.classes).to(opt.device)
+        elif name.startswith("VGG"):
+            self.net = vgg.create_model(name, opt.channels, opt.classes).to(opt.device)
+        elif name.startswith("RESNET"):
+            self.net = resnet.create_model(name, opt.channels, opt.classes).to(opt.device)
 
     def build_model(self):
-        """
-        This function build dataset, model and initialize parameters.
-        """
-        print("##### Achitecture #####")
-        name = self.opt.model
-        if name.startswith("ALEXNET"):
-            self.net = alex.create_model(self.opt.channels, self.opt.classes).to(self.opt.device)
-        elif name.startswith("VGG"):
-            self.net = vgg.create_model(name, self.opt.channels, self.opt.classes).to(self.opt.device)
-        elif name.startswith("RESNET"):
-            self.net = resnet.create_model(name, self.opt.channels, self.opt.classes).to(self.opt.device)
-
         # Weight initialization
         if self.opt.load_path is None:
             print("Weight Initialization")
@@ -36,12 +39,6 @@ class model:
             print(f"Loaded weight from {self.opt.load_path}")
             self.load(self.opt.load_path)
         print("#######################", end='\n\n')
-
-        # Define dataset
-        if self.opt.image_path is None:
-            self.data = Dataset(self.opt.dataroot)
-            self.trainloader = self.data.loader(self.data.train, self.opt.batch_size)
-            self.testloader = self.data.loader(self.data.test, self.opt.batch_size)
 
     def load(self, path):
         self.net.load_state_dict(torch.load(path))
@@ -64,7 +61,7 @@ class model:
         iteration = 0
         for epoch in range(self.opt.epoch):
             losses, acc = [], []
-            loop = tqdm((self.trainloader), total=len(self.trainloader), leave=False)
+            loop = tqdm(self.trainloader, total=len(self.trainloader), leave=False)
             for i, (inputs, labels) in enumerate(loop):
                 inputs, labels = inputs.to(self.opt.device), labels.to(self.opt.device)
                 outputs = self.net(inputs)
@@ -75,23 +72,23 @@ class model:
                 loss.backward()
 
                 optimizer.step()
-                scheduler.step(epoch + i / len(self.trainloader))
+                scheduler.step(int(epoch + i / len(self.trainloader)))
 
                 correct = 0
                 predicted = torch.argmax(outputs, dim=1)
                 correct = (predicted == labels).sum().item()
-                accurary = correct / labels.size(0)
-                acc.append(accurary)
+                accuracy = correct / labels.size(0)
+                acc.append(accuracy)
 
                 iteration += 1
-                loop.set_description(f"Epoch [{epoch+1}/{self.opt.epoch}]")
-                loop.set_postfix(Loss=loss.item(), Acc_train=accurary * 100)
+                loop.set_description(f"Epoch [{epoch + 1}/{self.opt.epoch}]")
+                loop.set_postfix(Loss=loss.item(), Acc_train=accuracy * 100)
                 time.sleep(0.1)
 
             mean_loss = sum(losses) / len(losses)
             mean_acc = (sum(acc) / len(acc)) * 100
 
-            print(f"Epoch [{epoch+1}/{self.opt.epoch}] Iter: {iteration}  Loss: {round(mean_loss,4)} Acc: {round(mean_acc,2)}")
+            print(f"Epoch [{epoch + 1}/{self.opt.epoch}] Iter: {iteration}  Loss: {round(mean_loss, 4)} Acc: {round(mean_acc, 2)}")
 
             # Early stopping
             early_stop(mean_loss)
@@ -104,7 +101,7 @@ class model:
             if (self.opt.save_type == 'best_epoch') and (early_stop.count == 0):
                 self.save(self.opt.save_type)
             elif (self.opt.save_type == 'N_epoch') and (epoch % self.opt.save_freq - 1 == 0):
-                self.save(self.opt.save_type, epoch+1)
+                self.save(self.opt.save_type, epoch + 1)
 
     def test(self):
         self.net.eval()
@@ -120,4 +117,5 @@ class model:
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
-            print(f"Accuracy of the network on the {len(self.data.test)} test images: {100*round((correct/total),2)}%")
+            print(
+                f"Accuracy of the network on the {len(self.data.test)} test images: {100 * round((correct / total), 2)}%")

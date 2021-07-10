@@ -1,9 +1,11 @@
-from model import model
+from network import Model
 from option import Options
+
 
 def main():
     opt = Options().parse()
-    net = model(opt)
+    print(opt)
+    net = Model(opt)
     net.build_model()
 
     if net.opt.phase == "train":

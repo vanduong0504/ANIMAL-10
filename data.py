@@ -10,7 +10,8 @@ class Dataset:
         self.test = datasets.ImageFolder(root=os.path.join(dataroot, 'test'), transform=self.transform(0))
         self.classes = self.train.class_to_idx
 
-    def transform(self, type):
+    @staticmethod
+    def transform(type):
         # Bool type for train or test
         if type:
             return transforms.Compose(
@@ -23,5 +24,6 @@ class Dataset:
                 [transforms.ToTensor(),
                  transforms.Normalize(mean, std)])
 
-    def loader(self, dataset, batch_sizes):
+    @staticmethod
+    def loader(dataset, batch_sizes):
         return DataLoader(dataset=dataset, batch_size=batch_sizes, shuffle=True, num_workers=2)

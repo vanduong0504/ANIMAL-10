@@ -37,7 +37,8 @@ class BasicBlock(nn.Module):
 
     def __init__(self, in_cha, out_cha, stride=1, downsample=None):
         super().__init__()
-        self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=3, stride=stride, padding=1,
+                               bias=False)
         self.bn1 = nn.BatchNorm2d(out_cha)
         self.relu = nn.ReLU(inplace=True)
         self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, kernel_size=3, padding=1, bias=False)
@@ -72,7 +73,8 @@ class Bottleneck(nn.Module):
         super().__init__()
         self.conv1 = nn.Conv2d(in_channels=in_cha, out_channels=out_cha, kernel_size=1, bias=False)
         self.bn1 = nn.BatchNorm2d(out_cha)
-        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, stride=stride, kernel_size=3, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha, stride=stride, kernel_size=3, padding=1,
+                               bias=False)
         self.bn2 = nn.BatchNorm2d(out_cha)
         self.conv3 = nn.Conv2d(in_channels=out_cha, out_channels=out_cha * 4, kernel_size=1, bias=False)
         self.bn3 = nn.BatchNorm2d(out_cha * 4)
@@ -110,7 +112,8 @@ class Resnet(nn.Module):
         self.nums_class = nums_class
 
         # Coding format follow torchvision.models.restnet
-        self.conv1 = nn.Conv2d(in_channels=self.image_channels, out_channels=64, kernel_size=7, stride=2, padding=3, bias=False)
+        self.conv1 = nn.Conv2d(in_channels=self.image_channels, out_channels=64, kernel_size=7, stride=2, padding=3,
+                               bias=False)
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
@@ -146,23 +149,27 @@ class Resnet(nn.Module):
 
         return output
 
-    def layer_block(self, resnet_dic, shortcut, downsample=None, intermediate_channels=None):
+    @staticmethod
+    def layer_block(resnet_dic, shortcut, downsample=None, intermediate_channels=None):
         block = []
         in_, out_, repeat = resnet_dic
 
         if downsample is not None:
             if shortcut == 2:
-                downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_, kernel_size=1, stride=2, bias=False),
-                                                 nn.BatchNorm2d(num_features=out_))
+                downsample_block = nn.Sequential(
+                    nn.Conv2d(in_channels=in_, out_channels=out_, kernel_size=1, stride=2, bias=False),
+                    nn.BatchNorm2d(num_features=out_))
                 block += [BasicBlock(in_cha=in_, out_cha=out_, stride=2, downsample=downsample_block)]
             else:
                 if intermediate_channels is None:
-                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_, out_channels=out_ * 4, kernel_size=1, bias=False),
-                                                     nn.BatchNorm2d(num_features=out_ * 4))
+                    downsample_block = nn.Sequential(
+                        nn.Conv2d(in_channels=in_, out_channels=out_ * 4, kernel_size=1, bias=False),
+                        nn.BatchNorm2d(num_features=out_ * 4))
                     block += [Bottleneck(in_cha=in_, out_cha=out_, downsample=downsample_block)]
                 else:
-                    downsample_block = nn.Sequential(nn.Conv2d(in_channels=in_ * 4, out_channels=out_ * 4, kernel_size=1, stride=2, bias=False),
-                                                     nn.BatchNorm2d(num_features=out_ * 4))
+                    downsample_block = nn.Sequential(
+                        nn.Conv2d(in_channels=in_ * 4, out_channels=out_ * 4, kernel_size=1, stride=2, bias=False),
+                        nn.BatchNorm2d(num_features=out_ * 4))
                     block += [Bottleneck(in_cha=in_ * 4, out_cha=out_, stride=2, downsample=downsample_block)]
         else:
             if shortcut == 2:

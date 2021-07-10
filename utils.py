@@ -12,7 +12,7 @@ mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
 
 def mean_std(loader):
     """
-    This function use to calculate mean and standard deviation of your dataset. 
+    This function use to calculate mean and standard deviation of your dataset.
     This mean and std use in data.py to normalze your data.
     """
     total_means, total_variations, nums_batches = 0, 0, 0

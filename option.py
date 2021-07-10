@@ -6,7 +6,13 @@ class Options:
     """
     This class provide some basic arguments.
     """
-    def initialize(self, parser):
+
+    def __init__(self):
+        self.parser = None
+        self.opt = None
+
+    @staticmethod
+    def initialize(parser):
         parser.add_argument("--model", type=str, required=True,
                         help="[VGG16, VGG19, RESNET18, RESNET34, RESNET50, RESNET101,...]")
         parser.add_argument("--phase", type=str, default=None,
@@ -39,22 +45,29 @@ class Options:
                             help="Early stopping. (default:99)")
         return parser
 
-    def check_args(self, args):
+    @staticmethod
+    def check_args(args):
         """
         This function to check for the arguments.
         """
 
-        #--epoch
+        # --epoch
         try:
             assert args.epoch >= 1
-        except BaseException:
-            print("Number of epoch must be larger than or equal to one")
+        except AssertionError:
+            raise AssertionError("Number of epoch must be larger than or equal to one!!!")
 
-        #--batch_size
+        # --batch_size
         try:
             assert args.batch_size >= 1
-        except BaseException:
-            print("batch size must be larger than or equal to one")
+        except AssertionError:
+            raise AssertionError("Batch size must be larger than or equal to one!!!")
+        
+        # --dataroot: None and --phase: train
+        try:
+            assert args.phase == "train" and args.dataroot is not None
+        except AssertionError:
+            raise AssertionError("Please provide a dataset path for training!!!")
         return args
 
     def gather_options(self):

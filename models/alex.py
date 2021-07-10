@@ -49,9 +49,9 @@ class AlexNet(nn.Module):
             block += [nn.MaxPool2d(kernel_size=3, stride=2)]
         return block
 
-    def classifier_block(self, fc):
+    def classifier_block(self, fully_layer):
         block = []
-        for values in fc.values():
+        for values in fully_layer.values():
             in_fea, out_fea = values
             if isinstance(out_fea, int):
                 block += [nn.Dropout()]
@@ -60,6 +60,7 @@ class AlexNet(nn.Module):
             else:
                 block += [nn.Linear(in_features=in_fea, out_features=self.nums_class)]
         return block
+
 
 def create_model(img_channel, num_classes):
     print("AlexNet created")

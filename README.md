@@ -121,17 +121,17 @@ My configuration for training phase:
     </td>
     <td>Resnet18</td>
     <td>11.2M</td>
-    <td>...</td>
+    <td>73.60</td>
   </tr>
   <tr>
     <td>Resnet34</td>
     <td>21.3M</td>
-    <td>...</td>
+    <td>71.69</td>
   </tr>
   <tr>
     <td>Resnet50</td>
     <td>23.5M</td>
-    <td>.</td>
+    <td>66.26</td>
   </tr>
   <tr>
     <td>Resnet152</td>
