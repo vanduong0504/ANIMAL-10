@@ -16,7 +16,7 @@ def main():
     if net.opt.phase == "test":
         print("[*] Testing begin!")
         net.test()
-        print("[*] Test finished!")
+        print("[*] Testing finished!")
 
 
 if __name__ == "__main__":
